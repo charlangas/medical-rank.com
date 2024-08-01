@@ -17,6 +17,7 @@ body {
     padding: 0 20px;
 }
 
+/* Typography */
 h1, h2, h3 {
     font-family: "Outfit", sans-serif;
     font-weight: 400;
@@ -26,6 +27,11 @@ h1, h2, h3 {
 h2 {
     text-transform: uppercase;
     letter-spacing: 0.15em;
+    font-weight: 800;
+}
+
+h2, h3 {
+    color: #0023B0;
 }
 
 a {
@@ -33,16 +39,40 @@ a {
     color: #333;
 }
 
-/* Header styles */
+.bold {
+    font-weight: 600;
+}
+
+.capitalized {
+    text-transform: capitalize;
+    letter-spacing: 0.05em;
+}
+
+.large-text {
+    font-size: 1.5rem !important;
+}
+
+.highlight-blue {
+    color: #355FEC !important;
+}
+
+.highlight-white {
+    color: #fff;
+    font-weight: 600;
+}
+
+.highlight-yellow {
+    color: #FFD600;
+}
+
+/* Header and Navigation */
 header {
     background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: fixed;
     width: 100%;
     z-index: 1000;
 }
 
-/* Navigation styles */
 nav {
     display: flex;
     justify-content: space-between;
@@ -70,17 +100,16 @@ nav {
 .logo {
     font-size: 24px;
     font-weight: bold;
-    color: #4299e1;
+    color: #355FEC;
 }
-
 
 .cta-button {
     font-family: "Outfit", sans-serif;
     font-size: smaller;
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    background-color: #4299e1;
+    background-color: #355FEC;
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
@@ -88,12 +117,12 @@ nav {
 }
 
 .cta-button:hover {
-    background-color: #3182ce;
+    background-color: #214BD8;
 }
 
-/* Hero section styles */
+/* Hero section */
 .hero {
-    background-color: #f0f4f8;
+    background-color: #fff;
     min-height: 700px;
     display: flex;
     align-items: center;
@@ -109,14 +138,14 @@ nav {
 }
 
 .hero-text {
-    flex: 1;
+    flex: 2 1;
     padding-right: 50px;
 }
 
 .hero h1 {
-    font-size: 4rem;
+    font-size: 3.5rem;
     margin-bottom: 20px;
-    line-height: 4.5rem;
+    line-height: 3.5rem;
     text-transform: capitalize;
 }
 
@@ -134,9 +163,18 @@ nav {
     height: auto;
 }
 
-/* Trusted by section styles */
+@keyframes fadeInOut {
+    10%, 90% { opacity: 1; }
+}
+
+#changing-state {
+    display: inline-block;
+    animation: fadeInOut 2s ease-in-out infinite;
+    color: #355FEC;
+}
+
+/* Trusted by section */
 .trusted-by {
-    padding: 50px 20px;
     text-align: center;
     background-color: #fff;
 }
@@ -146,16 +184,15 @@ nav {
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: 30px;
 }
 
 .logo-container img {
     margin: 10px;
 }
 
-/* How it works section styles */
+/* How it works section */
 .how-it-works {
-    background-color: #f0f4f8;
+    background-color: #fff;
     padding: 100px 20px;
     text-align: center;
 }
@@ -171,18 +208,17 @@ nav {
     flex-basis: calc(33.333% - 40px);
     margin: 20px;
     padding: 30px;
-    background-color: #fff;
+    background-color: #E8EDF5;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .step img {
     margin-bottom: 20px;
 }
 
-/* CTA section styles */
+/* CTA section */
 .cta {
-    background-color: #4299e1;
+    background-color: #355FEC;
     color: #fff;
     text-align: center;
     padding: 100px 20px;
@@ -200,7 +236,7 @@ nav {
 
 .cta .cta-button {
     background-color: #fff;
-    color: #4299e1;
+    color: #355FEC;
     font-size: 1.2rem;
     padding: 15px 30px;
 }
@@ -209,7 +245,7 @@ nav {
     background-color: #f0f4f8;
 }
 
-/* Services section styles */
+/* Services section */
 .services {
     padding: 100px 20px;
     background-color: #fff;
@@ -231,35 +267,64 @@ nav {
 
 .service img {
     max-width: 100%;
-    border
 }
 
-.tag {
-    padding: 0.5rem 1rem;
-    font-family: 'Outfit', sans-serif;
-    font-size: smaller;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    font-weight: 800;
+/* Two-column section */
+.two-column-section {
+    background-color: #355FEC;
+    padding: 100px 20px;
+    color: #fff;
+}
+
+.two-column-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.image-column {
+    flex: 1;
+    padding-right: 50px;
+}
+
+.image-column img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.content-column {
+    flex: 1;
+    text-align: left;
+}
+
+.content-column h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.content-column p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.content-column .cta-button {
+    display: inline-block;
+    background-color: #fff;
+    color: #355FEC;
+    padding: 15px 30px;
     border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
-.guide-post {
-    background-color: #a9d1ab;
-    color: #1a7a1f;
+.content-column .cta-button:hover {
+    background-color: #f0f0f0;
 }
 
-.blog-post {
-    background-color: #cfa5dc;
-    color: #631e78;
-}
-
-.tips {
-    background-color: #e2ab78;
-    color: #d14c0e;
-}
-
-/* Guides section styles */
+/* Guides section */
 .guides {
     padding: 100px 20px;
     background-color: #f0f4f8;
@@ -280,7 +345,6 @@ nav {
     background-color: #fff;
     border-radius: 10px;
     padding: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
 
@@ -298,11 +362,36 @@ nav {
 }
 
 .read-more {
-    color: #4299e1;
-    font-weight: bold;
+    color: #355FEC;
+    font-family: 'Outfit', sans-serif;
 }
 
-/* Testimonials section styles */
+.tag {
+    padding: 0.5rem 1rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: smaller;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 800;
+    border-radius: 5px;
+}
+
+.guide-post {
+    background-color: #B1EAB4;
+    color: #035D35;
+}
+
+.blog-post {
+    background-color: #E2CDF4;
+    color: #39035D;
+}
+
+.tips {
+    background-color: #BADEFD;
+    color: #2330A8;
+}
+
+/* Testimonials section */
 .testimonials {
     background-color: #fff;
     padding: 100px 20px;
@@ -322,7 +411,6 @@ nav {
     background-color: #f0f4f8;
     border-radius: 10px;
     padding: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: left;
 }
 
@@ -342,17 +430,91 @@ nav {
     text-align: right;
 }
 
-/* Responsive styles for smaller screens */
-@media (max-width: 768px) {
-    .testimonial {
-        flex-basis: 100%;
-    }
+/* Social Proof section */
+.social-proof {
+    padding: 100px 20px;
+    background-color: #fff;
 }
 
-/* Specialty services section styles */
-.specialty-services {
-    background-color: #4299e1;
+.social-proof-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f0f4f8;
+    border-radius: 20px;
+    display: flex;
+    overflow: hidden;
+}
+
+.social-proof-content {
+    flex: 2;
+    padding: 50px;
+}
+
+.social-proof-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.social-proof-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.checkmark-list {
+    list-style-type: none;
+    margin-bottom: 30px;
+}
+
+.checkmark-list li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.checkmark-list li::before {
+    content: "\2713";
+    position: absolute;
+    left: 0;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.social-proof-content .cta-button {
+    display: inline-block;
+    background-color: #355FEC;
     color: #fff;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.social-proof-content .cta-button:hover {
+    background-color: #214BD8;
+}
+
+.social-proof-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f4f8;
+}
+
+.social-proof-image img {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Specialty services section */
+.specialty-services {
+    background-color: #D6DFEF;
+    color: #355FEC;
     padding: 100px 20px;
     text-align: center;
 }
@@ -367,7 +529,7 @@ nav {
 }
 
 .specialty-services li {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
     font-family: "Outfit", sans-serif;
@@ -376,9 +538,9 @@ nav {
     text-transform: uppercase;
 }
 
-/* FAQ section styles */
+/* FAQ section */
 .faq {
-    background-color: #f0f4f8;
+    background-color: #E8EDF5;
     padding: 100px 20px;
 }
 
@@ -387,17 +549,16 @@ nav {
     border-radius: 10px;
     padding: 30px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .faq-item h3 {
     margin-bottom: 10px;
-    color: #4299e1;
+    color: #355FEC;
 }
 
-/* Footer styles */
+/* Footer */
 footer {
-    background-color: #2d3748;
+    background-color: #202D45;
     color: #fff;
     padding: 50px 20px;
 }
@@ -420,6 +581,7 @@ footer {
     font-family: "Outfit", sans-serif;
     font-size: 1.2rem;
     margin-bottom: 15px;
+    color: #8FB9FF;
 }
 
 .footer-section ul {
@@ -468,7 +630,28 @@ footer {
     color: #a0aec0;
 }
 
-/* Base responsive styles */
+/* Blog */
+.blog-content {
+    margin: auto 0;
+    width: 60%;
+}
+
+/* Responsive styles */
+@media (max-width: 968px) {
+    .social-proof-container {
+        flex-direction: column;
+    }
+
+    .social-proof-content,
+    .social-proof-image {
+        width: 100%;
+    }
+
+    .social-proof-image {
+        padding: 50px;
+    }
+}
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2.5rem;
@@ -478,10 +661,8 @@ footer {
     h2 {
         font-size: 2rem;
     }
-}
 
-/* Hero section responsive styles */
-@media (max-width: 768px) {
+    /* Hero section responsive styles */
     .hero-content {
         flex-direction: column;
         text-align: center;
@@ -495,10 +676,8 @@ footer {
     .hero-image {
         width: 100%;
     }
-}
 
-/* How it works section responsive styles */
-@media (max-width: 768px) {
+    /* How it works section responsive styles */
     .steps {
         flex-direction: column;
     }
@@ -507,10 +686,8 @@ footer {
         flex-basis: 100%;
         margin: 20px 0;
     }
-}
 
-/* Services section responsive styles */
-@media (max-width: 768px) {
+    /* Services section responsive styles */
     .service-grid {
         flex-direction: column;
     }
@@ -519,17 +696,27 @@ footer {
         flex-basis: 100%;
         margin: 20px 0;
     }
-}
 
-/* Guides section responsive styles */
-@media (max-width: 768px) {
+    /* Two-column section responsive styles */
+    .two-column-container {
+        flex-direction: column;
+    }
+
+    .image-column {
+        padding-right: 0;
+        margin-bottom: 30px;
+    }
+
+    .content-column {
+        text-align: center;
+    }
+
+    /* Guides section responsive styles */
     .guide-grid {
         grid-template-columns: 1fr;
     }
-}
 
-/* Testimonials section responsive styles */
-@media (max-width: 768px) {
+    /* Testimonials section responsive styles */
     .testimonial-grid {
         flex-direction: column;
     }
@@ -538,10 +725,8 @@ footer {
         flex-basis: 100%;
         margin: 20px 0;
     }
-}
 
-/* Specialty services section responsive styles */
-@media (max-width: 768px) {
+    /* Specialty services section responsive styles */
     .specialty-services ul {
         flex-direction: column;
     }
@@ -550,10 +735,8 @@ footer {
         width: 100%;
         margin: 10px 0;
     }
-}
 
-/* Footer responsive styles */
-@media (max-width: 768px) {
+    /* Footer responsive styles */
     .footer-content {
         flex-direction: column;
     }
@@ -562,9 +745,8 @@ footer {
         width: 100%;
         margin-bottom: 30px;
     }
-}
-/* Mobile navigation styles */
-@media (max-width: 768px) {
+
+    /* Mobile navigation styles */
     .nav-list {
         display: none;
         flex-direction: column;
@@ -573,7 +755,6 @@ footer {
         top: 70px;
         left: 0;
         background-color: #fff;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     .nav-list.active {
@@ -608,5 +789,15 @@ footer {
 
     .menu-toggle.active .bar:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Social proof section responsive styles */
+    .social-proof-content h2 {
+        font-size: 2rem;
+    }
+
+    .social-proof-content p,
+    .checkmark-list li {
+        font-size: 1rem;
     }
 }
