@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     const states = [
-        'Texas', 'Utah', 'New York', 'California', 'Kansas', 'Florida', 'Maryland', 'Arizona', 'Oregon', 'Washington', 'Idaho', 'South Dakota', 'Oklahoma', 'Illinois', 'Alaska', 'Colorado', 'Connecticut', 'Kentucky', 'Louisiana',  'Pennsylvania', 'Maine', 'Nebraska', 'Missouri', 'Arkansas', 'Alabama', 'Georgia', 'New Mexico', 'North Carolina', 'Virginia', 'Mississippi', 'Delaware', 'Rhode Island', 'Vermont', 'Michigan', 'Ohio', 'Massachusetts', 'Minnesota', 'Hawaii', 'Indiana', 'Iowa',  'Montana', 'Wyoming', 'Nevada', 'New Hampshire', 'New Jersey', 'Wisconsin', 'North Dakota', 'South Carolina', 'Tennessee', 'West Virginia'];
+        'Texas', 'Utah', 'New York', 'California', 'Kansas', 'Florida', 'Maryland', 'Arizona', 'Oregon', 'Washington', 'Idaho', 'South Dakota', 'Oklahoma', 'Illinois', 'Arkansas', 'Alaska', 'Colorado', 'Connecticut', 'Kentucky', 'Louisiana',  'Pennsylvania', 'Maine', 'Nebraska', 'Missouri', 'Alabama', 'New Mexico', 'North Carolina', 'Mississippi', 'Delaware', 'Rhode Island', 'Georgia', 'Vermont', 'Michigan', 'Ohio', 'Massachusetts', 'Minnesota', 'Virginia', 'Hawaii', 'Indiana', 'Iowa',  'Montana', 'Wyoming', 'Nevada', 'New Hampshire', 'New Jersey', 'Wisconsin', 'North Dakota', 'South Carolina', 'Tennessee', 'West Virginia'];
     const changingState = document.getElementById('changing-state');
     let currentIndex = 0;
 

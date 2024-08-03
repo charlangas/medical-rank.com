@@ -17,6 +17,10 @@ body {
     padding: 0 20px;
 }
 
+.spacer-100 {
+    padding-top: 100px;
+}
+
 /* Typography */
 h1, h2, h3 {
     font-family: "Outfit", sans-serif;
@@ -188,6 +192,7 @@ nav {
 
 .logo-container img {
     margin: 10px;
+    max-width: 150px;
 }
 
 /* How it works section */
@@ -245,6 +250,20 @@ nav {
     background-color: #f0f4f8;
 }
 
+.small {
+    border-radius: 20px;
+    margin-top: 40px;
+    padding: 40px 25px !important;
+    margin-bottom: 30px;
+    background-color: #E8EDF5;
+    border: 2px solid #355FEC;
+    color: #202D45;
+}
+
+.small h2 {
+    color: #355FEC;
+}
+
 /* Services section */
 .services {
     padding: 100px 20px;
@@ -267,6 +286,7 @@ nav {
 
 .service img {
     max-width: 100%;
+    margin-bottom: 20px;
 }
 
 /* Two-column section */
@@ -631,11 +651,54 @@ footer {
 }
 
 /* Blog */
-.blog-content {
-    margin: auto 0;
-    width: 60%;
+.blog {
+    background-color: #D6DFEF;
+    margin-bottom: 65px;
 }
 
+.blog-content {
+    width: 60%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 50px 20px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.blog-content h2 {
+    margin-top: 60px;
+}
+
+.blog-content h3 {
+    margin-top: 30px;
+}
+
+.blog-content p {
+    margin-bottom: 20px;
+}
+
+.blog-content ul, .blog-content ol {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.blog-content li {
+    margin-bottom: 10px;
+}
+
+.blog .hero-image img {
+    border-radius: 50% !important;
+}
+
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .blog-content {
+        width: 90%;
+        padding: 30px 15px;
+    }
+}
 /* Responsive styles */
 @media (max-width: 968px) {
     .social-proof-container {
@@ -685,6 +748,11 @@ footer {
     .step {
         flex-basis: 100%;
         margin: 20px 0;
+    }
+
+    /* CTA Section responsive styles */
+    .cta .cta-button {
+        font-size: .8rem;
     }
 
     /* Services section responsive styles */
