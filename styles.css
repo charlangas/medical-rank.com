@@ -102,9 +102,12 @@ nav {
 }
 
 .logo {
-    font-size: 24px;
     font-weight: bold;
     color: #355FEC;
+}
+
+.logo img {
+    max-width: 200px;
 }
 
 .cta-button {
@@ -558,6 +561,43 @@ nav {
     text-transform: uppercase;
 }
 
+.specialty-services li a {
+    color: #355FEC;
+}
+
+/* Popular Locations section */
+.popular-locations {
+    background-color: #f0f4f8;
+    padding: 100px 20px;
+}
+
+.popular-locations h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.locations-grid {
+    column-count: 4;
+    column-gap: 20px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.locations-grid li {
+    margin-bottom: 10px;
+    break-inside: avoid-column;
+}
+
+.locations-grid a {
+    color: #355FEC;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.locations-grid a:hover {
+    color: #214BD8;
+}
+
 /* FAQ section */
 .faq {
     background-color: #E8EDF5;
@@ -867,5 +907,17 @@ footer {
     .social-proof-content p,
     .checkmark-list li {
         font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .locations-grid {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 480px) {
+    .locations-grid {
+        column-count: 1;
     }
 }
