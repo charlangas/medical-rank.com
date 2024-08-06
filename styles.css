@@ -347,6 +347,10 @@ nav {
     background-color: #f0f0f0;
 }
 
+.caption {
+    width: 90%;
+}
+
 /* Guides section */
 .guides {
     padding: 100px 20px;
@@ -724,10 +728,6 @@ footer {
 
 .blog-content li {
     margin-bottom: 10px;
-}
-
-.blog .hero-image img {
-    border-radius: 50% !important;
 }
 
 
