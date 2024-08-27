@@ -694,6 +694,199 @@ footer {
     color: #a0aec0;
 }
 
+/* Podcast */
+.podcast nav {
+    background-color: #214BD8;
+}
+
+.podcast nav li {
+    color: #fff;
+}
+
+.podcast .hero {
+    display: block;
+    background: rgb(0,25,166);
+    background: linear-gradient(0deg, rgba(0,25,166,1) 0%, rgba(33,75,216,1) 90%);
+}
+
+.podcast .hero h1 {
+    color: #D6DFEF;
+    font-size: 3.5em;
+    line-height: 1em;
+}
+
+.podcast .hero p {
+    color: #FFD701;
+    font-weight: 300;
+    font-size: 2.25em;
+}
+
+.podcast .hero .hero-text {
+    flex: 1 1;
+}
+
+.podcast .hero .row-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.podcast .hero .checks {
+    display: flex;
+}
+
+.podcast .benefits-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 40px auto 0; /* Center the row and add margin */
+}
+
+.podcast .benefit-column {
+    flex: 1 1 22%; /* Flexbox: 1 1 22% to create four columns with some margin */
+    max-width: 22%;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.podcast .benefit-item {
+    display: flex;
+    align-items: flex-start;
+}
+
+.podcast .benefit-item img {
+    width: 40px; /* Size for the check icon */
+    height: 40px;
+    margin-right: 10px;
+}
+
+.podcast .benefit-text p {
+    font-family: 'Outfit', serif;
+    text-transform: capitalize;
+    font-size: 1rem !important;
+    color: #fff !important;
+}
+
+/* Why Listen Section */
+.podcast .why-listen {
+    background-color: #D6DFEF;
+    display: flex;
+    align-items: flex-start;
+    padding: 30px 20px 0;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.podcast .why-listen .hero-text {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.podcast .why-listen .hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.podcast .why-listen .hero-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.podcast .why-listen h2 {
+    color: #041EAB;
+    font-weight: 400;
+    font-size: 2em;
+    text-transform: none;
+    letter-spacing: 0.05em;
+}
+
+.podcast .why-listen p {
+    font-size: 1.5em;
+}
+
+/* CTA Section */
+.podcast .cta-section {
+    background-color: #1842CF;
+    display: flex;
+    align-items: flex-start;
+    padding: 30px 20px 0;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.podcast .cta-section .hero-text {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.podcast .cta-section .hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.podcast .cta-section .hero-image img {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 0;
+}
+
+.podcast .cta-section h2 {
+    color: #fff;
+    font-weight: 400;
+    font-size: 2em;
+    text-transform: none;
+    letter-spacing: 0.05em;
+}
+
+.podcast .cta-section p {
+    color: #FFD701;
+    font-size: 1.5em;
+}
+
+/* Guest Form Section */
+.podcast .guest-form {
+    background-color: #D6DFEF; /* Matches the color scheme of other sections */
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.podcast .guest-form h2 {
+    font-size: 2rem;
+    color: #041EAB; /* Matches the color scheme */
+    margin-bottom: 20px;
+}
+
+.podcast .guest-form iframe {
+    max-width: 100%;
+    border: none; /* Remove any default borders */
+}
+
+/* Media Queries for Mobile View */
+@media (max-width: 768px) {
+    .podcast .benefit-column {
+        flex: 1 1 100%;
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .podcast .benefit-text p {
+        font-size: 1.25em !important;
+    }
+
+    .podcast .why-listen, .podcast .cta-section {
+        flex-direction: column;
+    }
+}
+
 /* Blog */
 .blog {
     background-color: #D6DFEF;
