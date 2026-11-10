@@ -26,4 +26,5 @@ const all = []; (function walk(d) { for (const f of fs.readdirSync(d)) { const p
 ok(!all.some((p) => /benchmark|pilot|qa_|mock|frozen|recovery_audit|walkthrough/i.test(p)), 'no benchmark/QA/pilot file names in dist');
 ok(!all.some((p) => /\.(html|xml|txt|css)$/.test(p) && /sample-benchmark|qa_notes|mock_set|frozen_v|recovery_audit/.test(fs.readFileSync(p, 'utf8'))), 'no benchmark/QA references inside dist files');
 ok(!fs.existsSync('dist/guides/sample-benchmark-cost-per-event'), 'benchmark route not emitted');
+ok(/name="robots" content="noindex,follow"/.test(r('404.html')), '404.html is noindex (the /404 URL itself resolves 200 on Workers assets)');
 process.exit(bad ? 1 : 0);

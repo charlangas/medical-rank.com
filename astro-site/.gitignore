@@ -6,3 +6,4 @@ dist/
 .netlify
 
 print-previews/
+legacy-url-inventory.csv
