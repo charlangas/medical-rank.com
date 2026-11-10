@@ -11,6 +11,6 @@ city pages,/dental/colorado/parker-seo,24000,404,none,generated pages; no 1:1 re
 blog posts (4),/blog/how-to-get-more-patients,4,404,none,topics differ from the Google Ads guide; their canonicals point at each other (not self-canonical); no genuine replacement,yes: confirm none has value to keep
 podcast page,/physical-therapy/pod,1,404 (default) - DECISION,none,podcast promo page that links out to the podcast platforms (recent commits added the YouTube, Facebook and podcast links); whether anyone links to the page is unknown (check Search Console links and the platform descriptions); not in old sitemap,YES: preserve or retire
 www host,https://www.medical-rank.com/*,all,301 -> apex same path,Cloudflare Redirect Rule (zone level; not in _redirects),www is what the old sitemap and canonicals use; apex is the new canonical,yes: add the rule at cutover
-netlify host,https://medicalrank.netlify.app/*,all,not controlled by Cloudflare,Netlify setting,keep a redirect or disable the Netlify site after cutover,yes
+netlify host,https://medicalrank.netlify.app/*,all,not controlled by Cloudflare,Netlify setting,delete the Netlify site after the rollback window (CUTOVER.md section 7),yes
 non-canonical slash,/guides/x (no slash),new pages,307 -> /guides/x/,Workers assets html_handling default,canonical tag points at the slash form,no
 unknown path,/this-page-does-not-exist,any,404 with 404.html body,assets not_found_handling=404-page,no catch-all 200 rule exists,no
