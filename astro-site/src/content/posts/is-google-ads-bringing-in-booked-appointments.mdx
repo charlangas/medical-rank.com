@@ -1,0 +1,208 @@
+---
+slug: is-google-ads-bringing-in-booked-appointments
+title: "Is Google Ads bringing in booked appointments? Start with the two reports you already have"
+summary: "What your Google Ads report and your clinic's booking report each count, what you can and can't conclude from them, and a worksheet for deciding what to do next."
+author: carlos-ochoa
+shortAnswer: "Your Google Ads report counts events. Your booking report counts appointments. Unless your clinic system keeps an automatic link from the ad click to the booking, you can't say how many bookings the ads produced, and you shouldn't estimate it from how the two sets of numbers move together. The worksheet shows what to check, what to ask, and what each result lets you decide."
+worksheet: ads-bookings-check
+published: 2026-11-08
+sources:
+  - id: conv-actions
+    title: "About primary and secondary conversion actions"
+    publisher: "Google Ads Help"
+    url: "https://support.google.com/google-ads/answer/11461796"
+    checked: 2026-11-08
+    supports: "Primary actions are reported in the Conversions column; secondary actions are observation-only and appear in All conversions; Analytics-created actions are secondary by default; custom-goal actions are used for reporting and bidding whether primary or secondary"
+  - id: campaign-goals
+    title: "About campaign-specific conversion goals"
+    publisher: "Google Ads Help"
+    url: "https://support.google.com/google-ads/answer/9143218"
+    checked: 2026-11-08
+    supports: "A campaign using campaign-specific goals reports and bids on only the selected actions, overriding account defaults"
+  - id: call-conv
+    title: "About phone call conversion tracking"
+    publisher: "Google Ads Help"
+    url: "https://support.google.com/google-ads/answer/6100664"
+    checked: 2026-11-08
+    supports: "Calls count only if they last at least the minimum you set; taps on a number on a mobile site count the click, not the call"
+  - id: call-details
+    title: "About call details"
+    publisher: "Google Ads Help"
+    url: "https://support.google.com/google-ads/answer/7180997"
+    checked: 2026-11-08
+    supports: "Call details include area code, start and end time, missed or received, and call type; calls are reported on the date they occur and call conversions on the date of the ad click"
+  - id: count-settings
+    title: "About conversion counting options"
+    publisher: "Google Ads Help"
+    url: "https://support.google.com/google-ads/answer/3438531"
+    checked: 2026-11-08
+    supports: "'One' counts only one conversion per ad click and is described as a good choice when you care whether a lead came in; 'Every' counts each conversion and is described as a good choice for tracking sales; the page does not use the word 'recommended'"
+  - id: auto-tagging
+    title: "About auto-tagging"
+    publisher: "Google Ads Help"
+    url: "https://support.google.com/google-ads/answer/3095550"
+    checked: 2026-11-08
+    supports: "Auto-tagging appends a click identifier (GCLID) to the landing-page URL; the page does not address forms"
+  - id: click-view
+    title: "ClickView, API v26 (Google Ads API reference)"
+    publisher: "Google for Developers"
+    url: "https://developers.google.com/google-ads/api/reference/rpc/v26/ClickView"
+    checked: 2026-11-08
+    supports: "Click-level reports include the click ID; queries cover one day at a time and up to 90 days back; click IDs are unavailable for some app campaign types"
+  - id: click-view-fields
+    title: "click_view field reference, API v26 (Google Ads API)"
+    publisher: "Google for Developers"
+    url: "https://developers.google.com/google-ads/api/fields/v26/click_view"
+    checked: 2026-11-08
+    supports: "click_view exposes the click ID (gclid); campaign and ad_group are listed as resources that can be selected with it; segments.date is available; queries need a single-day filter and reach back 90 days"
+internal:
+  status: published
+  permissions: none-required
+  evidenceNotes:
+    - "FIRST (Carlos, interview): front-desk logging varies; extra fields are hard to get logged consistently; booking-vs-conversion comparison is the usual starting point; some clinic systems retain source information better than others; assume no reliable event-to-booking link until records show one."
+    - "FIRST (Carlos, interview): confirmed match needs a stored click ID or tracked number; most common look-alike is duplicates and non-requests; 'not enough yet' when unknowns could flip the decision or volume/time is too small."
+    - "EDIT: the decision table, 'upper bound' labelling, and the alignment gate are editorial judgment."
+    - "Worksheet desk-checked on invented report sets by independent AI reviewers (not people). Real-reader usability untested."
+  disclosedLimits:
+    - "Real-reader usability untested"
+    - "Clinic-provider questions not yet confirmed with a vendor"
+    - "Whether a given agency can provide click ID, click date and campaign for the relevant clicks is unconfirmed; the API capability is documented, no export has been obtained"
+---
+
+## Who this is for, and who it isn't
+
+This is for owners and managers of US specialty practices that pay for Google Ads and can get two things: the Google Ads report, and a new-patient booking report from their clinic management system.
+
+It is not for practices that don't run ads. It also doesn't cover importing offline results into Google Ads, and it isn't legal advice about what patient information you may collect or share. Check those questions with your own advisor.
+
+## What your two reports actually count
+
+| Report | It counts | It doesn't count |
+|---|---|---|
+| Google Ads, "Conversions" column | Events: the form submits, calls and other actions your account is set to count | People, requests, bookings, or patients |
+| Clinic system booking report | Appointments placed on the schedule, by whichever date the report uses | Where each person came from, unless the system captured a link automatically |
+| A "source" or "referral" field | A label someone chose | A verified link to an ad |
+
+A few Google Ads settings change what the first row means. Each is easy to miss.
+
+**Primary and secondary.** The Conversions column reports your primary actions. Secondary actions show up in "All conversions." Actions created through Google Analytics start out secondary.
+<EvidenceNote source="conv-actions" />
+
+**Custom and campaign goals.** An action in a custom goal is used for reporting and bidding whether it's marked primary or secondary. And a campaign using campaign-specific goals reports only the actions chosen for it.
+<EvidenceNote source="conv-actions" />
+
+<EvidenceNote source="campaign-goals" />
+
+So the Conversions total can differ from the sum of your primary rows (our reading of the two points above, not a statement from Google). If it does, that's a question for whoever manages the account, not a number to explain away. The difference is a net figure, so don't assign it to one cause.
+
+**Calls and taps.** A call counts only if it lasts at least the minimum length someone set. A tap on a phone number on a mobile site counts the click, not a call.
+<EvidenceNote source="call-conv" />
+
+**Dates.** Google reports a call on the date it happened and a call conversion on the date of the ad click, so two reports of "the same month" can disagree at the edges.
+<EvidenceNote source="call-details" />
+
+**Counting.** Google describes the "One" setting, which counts one conversion per ad click, as a good choice when you care whether a lead came in, and "Every", which counts repeats, as a good choice for tracking sales.
+<EvidenceNote source="count-settings" />
+
+## The fork: does your clinic system keep a link?
+
+The question that decides everything: **when someone asks for an appointment, does the clinic system automatically store a click ID or other ad tracking value with that request, and keep it through to the booking?**
+
+Google Ads can add a click identifier to the address of the page people land on from your ads.
+<EvidenceNote source="auto-tagging" />
+Whether your request form saves it is a separate matter. That page doesn't address forms, so ask your clinic software provider or web provider.
+
+A source field that staff choose from a list doesn't count as a link. It records what someone remembered or typed.
+
+In our experience, front-desk logging varies, and getting staff to record extra details consistently is hard. So this method starts with the two reports you already have and asks no one to log anything new. We assume there is no reliable link between an ad event and a booking until the records show one.
+
+## Path 1: you have totals only
+
+If the answer to the fork is no or unknown, you have two sets of totals. Here is what you can say:
+
+- what each report counts (use the table above and your own settings)
+- what remains unknown: which bookings, if any, came from an ad; whether the people behind ad events are the people in bookings; how many events are repeats
+
+**What you can't do:** estimate ad-attributed bookings from the totals, from the source field, or from how closely the two sets of numbers rise and fall together. Counts that move together aren't a link. You also can't state ad spend per booking. You can quote the cost per **event** (spend divided by the Conversions total), as long as you call it that.
+
+**A hypothetical check (HYPOTHETICAL data).** An account's primary rows add up to 36 events, but the Conversions column says 40. One campaign uses a custom goal that includes an Analytics-imported action. That may be part of the 4, but the report doesn't say, and a net difference can hide events added and dropped. Write any guess down as unconfirmed, don't change a count because of it, and ask the agency.
+
+**Questions to send the agency:** which actions are primary and what each counts; which goal type each campaign uses; the count settings and minimum call length; the date basis of the report; and whether they can export individual call details.
+
+**Questions for your clinic software provider:** can the request form store a click ID automatically and keep it through to the booking; can the report show requests separately from bookings; can the source field be set automatically; and can the report be pulled by the date of the request.
+
+This is a real result. "We don't know yet, and here is what would change that" is a defensible place to be. Your cost ceiling has no use yet: it is for when you have ad spend per verified booking. Whether to cut spend while you find out is a risk choice about what you can afford to lose. It isn't a finding that the ads aren't working.
+
+## Path 2: you have booking-level evidence
+
+If your clinic system does store the link, you can follow people from request to booking.
+
+1. **Define the cohort by the click.** Clicks inside the same dates and campaigns as your Ads spend, with outcomes followed until the day you pulled the report. Bookings still upcoming that day are upcoming, not failures.
+2. **Check each click, not just the click ID.** A click ID being present isn't enough. Ask your agency whether it can provide the click ID, click date and campaign for the relevant clicks, then match each request to that export. If your clinic system already stores click IDs, the worksheet has a short follow-up message for exactly this question. A request whose click was the month before, whose campaign isn't in the spend, or whose click ID isn't found is kept out of any cost.
+3. **Count people, not requests.** Someone who submitted the form twice is one person.
+4. **Follow them to bookings.** Keep requests and bookings apart: not everyone who asks books.
+5. **Exclude what isn't a new-patient booking.** An existing patient who used the form isn't a new patient.
+6. **Keep out anything without a verified link.** Bookings from requests with no click ID, or with an ineligible click, stay out of the verified count. Some may be ad visitors whose click ID was lost, so the verified count is a floor.
+7. **Check alignment before any cost.** Every counted booking must trace to a click inside the spend period and in a campaign in the spend. No click-level export means no cost: write down what's missing and stay on the totals-only path.
+
+Be clear about what Google's documentation shows. The API reference describes a click-level report with the click ID and a date, and lists campaign as something you can select with it. That is a documented capability. It isn't an export you hold. Whether your agency can run it is for them to confirm, and the query reaches back only 90 days at one day per query, so ask early.
+
+<EvidenceNote source="click-view-fields" />
+
+<EvidenceNote source="click-view" />
+
+If the answer is no, you're back on the totals-only path, with cost left blank.
+
+**A hypothetical example (HYPOTHETICAL data).** One month, $2,600 of Ads spend on clicks dated Sep 1 to Sep 30 in two campaigns. The agency exported click date and campaign for every click ID, and each counted booking below traces to a September click in one of the two.
+
+| Step | Count |
+|---|---|
+| Ads events: web form / calls (primary actions) | 18 / 8 |
+| Web requests carrying a click ID | 17 |
+| ...of those, click dated Sep 1 to 30 in one of the two campaigns | 17 |
+| Unique people (2 repeat submissions removed) | 15 |
+| Not booked (unreachable, declined, out of area) | 6 |
+| Booked | 9 |
+| Not a new patient (excluded) | 1 |
+| **Verified new-patient bookings created** (attended, no-show, cancelled and upcoming all count) | **8** |
+| Attended / no-show / cancelled / upcoming | 5 / 1 / 1 / 1 |
+| Bookings from requests with no click ID (kept out) | 2 |
+| Phone bookings the front desk labelled "Google Ads" (not credited: staff-chosen) | 5 |
+
+Phone calls have no automatic link here, so that route stays unknown.
+
+**Costs, and exactly what they cover.** The $2,600 is all spend on clicks dated Sep 1 to Sep 30 in the two campaigns, across every route: forms, calls, taps and clicks that never converted. The outcomes are new-patient bookings created from requests with a verified September click, counted once per person, in any status as of the pull date. Phone bookings, requests with no click ID and requests after the pull are not in them. Here are the figures:
+- $2,600 ÷ 8 = **$325 ad spend per verified booking**. A verified booking is a new-patient booking created from a request with a verified September click, in any status.
+- $2,600 ÷ 5 = **$520 ad spend per attended first visit**, provisional while one booking is still upcoming. This is a different measure and isn't compared with the booking ceiling.
+
+**What the upper bound applies to.** An *eligible* booking is a new-patient booking created from a September click in one of the two campaigns. Some eligible bookings may be missing from the eight, such as one with a lost click ID or a request made after the pull. So the true spend per eligible booking is no higher than $325, if each of the eight really met the rules. It doesn't bound what the ads caused, or anything about calls, phone bookings or other months.
+
+The same logic cuts the other way. If the figure came out *above* your ceiling, that would be inconclusive, not a verdict: the missing eligible bookings could bring the true figure down.
+
+Matching shows a click came before a request. It doesn't prove the ad caused it, and with only a handful of bookings, one or two more or fewer changes these costs a lot. Treat them as a reading to repeat next period.
+
+## What to do next
+
+Decide what you'd pay for one new-patient booking *created*, counting cancelled, no-show and upcoming bookings as bookings. That is separate from what you'd pay for an attended first visit. Use your own economics. Then:
+
+| What you found | What the evidence supports |
+|---|---|
+| Totals only | Hold changes you were planning because of the Ads numbers. Send the questions. Repeat after one cycle. |
+| Booking-level link on some routes, ad spend per verified booking at or below your ceiling | Descriptive only: over the scope above, the upper bound on spend per eligible booking is no higher than your ceiling, if each verified booking met the rules above. It says nothing about routes the link doesn't cover and doesn't show the ads caused the bookings. Repeat next period before treating it as settled. |
+| Booking-level link on some routes, ad spend per verified booking above your ceiling | **Inconclusive.** Eligible bookings may be missing, so don't call the campaign poor. Close the gaps, then repeat. If it stays above your ceiling once they're closed, review the campaign with your agency. |
+| Ad spend per verified booking is fine, ad spend per attended first visit isn't | Inconclusive on its own. An upcoming booking may still attend, and the attended count may be missing eligible visits, in the same way the booking count may be, and it also depends on no-shows and cancellations, not only on the ads. Look at reminders and rescheduling before changing the campaign, and repeat next period. |
+| Spend and cohort not aligned | No cost figure. Re-pull on matching dates. |
+
+Keep two questions separate: *can we trust what's being counted?* and *is the campaign performing?* The first has to be answered before the second.
+
+## What this doesn't tell you
+
+- That ads caused any booking. It shows a click preceded a request.
+- What other channels, such as your Google Business Profile, organic search or referrals, contributed. Keep them separate unless something links them to paid traffic.
+- Anything about legal or privacy requirements for collecting identifiers.
+
+## How we checked this
+
+The Google Ads behavior described here comes from the pages listed under Sources, which we read on the dates shown beside each one. Where a page is silent, this guide says so.
+
+The worksheet has been desk-checked on hypothetical report sets: independent AI reviewers (not people) worked through it and it was revised from what they found. No practice has used it, so whether it works for a real practice is untested. The questions for clinic software providers have not been confirmed with a vendor, and no one has yet confirmed that a particular agency can supply click date and campaign for a practice's click IDs.

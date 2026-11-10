@@ -1,0 +1,38 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import EvidenceNote from '../../components/EvidenceNote.astro';
+import Methodology from '../../components/Methodology.astro';
+import { inBuild, isLive } from '../../lib/release';
+import { authors } from '../../lib/authors';
+
+// Publishing is opt-in: only status "published" posts are built, unless SHOW_DRAFTS=1 (dev / preview builds).
+export async function getStaticPaths() {
+  const all = await getCollection('posts');
+  return all
+    .filter((p) => inBuild(p.data.internal.status))
+    .map((p) => ({ params: { slug: p.data.slug }, props: { post: p } }));
+}
+const { post } = Astro.props;
+const d = post.data;
+const { Content } = await render(post);
+const draft = !isLive(d.internal.status);
+const author = authors[d.author];
+if (!author) throw new Error(`Unknown author "${d.author}"`);
+const fmt = (x) => x.toISOString().slice(0, 10);
+---
+<PostLayout title={d.title} description={d.summary} draft={draft}>
+  <h1>{d.title}</h1>
+  <p class="byline">By {author.name}{d.published && <> · Published <time datetime={fmt(d.published)}>{fmt(d.published)}</time></>}</p>
+  <p class="summary">{d.summary}</p>
+  {d.shortAnswer && <aside class="short"><strong>Short answer.</strong> {d.shortAnswer}</aside>}
+  {d.worksheet && <p class="cta"><a href={`/worksheets/${d.worksheet}/`}>Open the printable worksheet</a></p>}
+  <Content components={{ EvidenceNote, Methodology }} />
+  <aside class="author"><strong>About the author.</strong> {author.bio}</aside>
+  <h2>Sources</h2>
+  <ol class="sources">
+    {d.sources.map((s) => (
+      <li><a href={s.url} rel="noopener">{s.title}</a>, {s.publisher}. Checked {s.checked.toISOString().slice(0, 10)}.</li>
+    ))}
+  </ol>
+</PostLayout>

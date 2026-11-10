@@ -1,0 +1,4 @@
+# Legacy redirects: only where a genuine replacement exists. No catch-all rules.
+# Hosting-neutral: plain 301s only (works on Netlify and Cloudflare). 410 is not used.
+/index /  301
+/sitemap.xml /sitemap-index.xml  301

@@ -1,0 +1,50 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import { inBuild, isLive } from '../../lib/release';
+
+export async function getStaticPaths() {
+  const all = await getCollection('worksheets');
+  return all.filter((w) => inBuild(w.data.status)).map((w) => ({ params: { id: w.data.id }, props: { w } }));
+}
+const { w } = Astro.props;
+const { Content, headings } = await render(w);
+// Jump bar: the path gate and the two paths must be easy to find.
+const wanted = [/^3\./, /^4A\./, /^4B\./, /^5\./];
+const jumps = headings.filter((h) => h.depth === 2 && wanted.some((r) => r.test(h.text)));
+const label = (t) => (/^4A/.test(t) ? 'Path 1: totals only (4A)' : /^4B/.test(t) ? 'Path 2: booking-level (4B)' : /^3\./.test(t) ? '3 Which path?' : '5 Next step');
+---
+<PostLayout title={w.data.title} description={w.data.description} kind="worksheet" noindex={true} draft={!isLive(w.data.status)}>
+  <nav slot="nav" class="jump"><span>Jump to:</span><a href="#agency-msg">Message for your agency</a>{jumps.map((h) => <a href={`#${h.slug}`}>{label(h.text)}</a>)}</nav>
+  <div class="printbar">
+    <button type="button" data-print="start">Print 1-page starting sheet</button>
+    <button type="button" data-print="quick">Print quick check + totals-only</button>
+    <button type="button" data-print="all">Print everything</button>
+    <span>Starting sheet = the path choice and the message to send your agency. Quick check = Sections 1, 2, 3, 4A and 5. It leaves out the booking-level reconciliation (4B).</span>
+  </div>
+  <div id="ws"><Content /></div>
+  <p class="print-note-quick">Section 4B (Path 2, booking-level reconciliation) is not in this printout. If Section 3 marks any row <strong>yes</strong>, print the full worksheet.</p>
+  <script is:inline>
+    (function () {
+      var ws = document.getElementById('ws');
+      var cur = null, secs = [];
+      Array.prototype.slice.call(ws.children).forEach(function (el) {
+        if (el.tagName === 'H2') { cur = document.createElement('section'); var t = el.textContent.trim(); cur.className = 'sec'; cur.dataset.sec = (t.match(/^(4A|4B|\d)/) || ['x'])[0]; ws.insertBefore(cur, el); }
+        if (cur) cur.appendChild(el);
+      });
+      var bq = ws.querySelector('blockquote'); if (bq && bq.previousElementSibling) bq.previousElementSibling.id = 'agency-msg';
+      var note = document.querySelector('.print-note-quick'), f = ws.querySelector('[data-sec="5"]');
+      if (f) f.insertBefore(note, f.children[1] || null);
+      function go(mode) {
+        document.body.setAttribute('data-print', mode);
+        window.print();
+      }
+      document.querySelectorAll('.printbar button').forEach(function (btn) {
+        btn.addEventListener('click', function () { go(btn.dataset.print); });
+      });
+      window.addEventListener('afterprint', function () { document.body.removeAttribute('data-print'); });
+      var q = new URLSearchParams(location.search).get('print');
+      if (q === 'quick' || q === 'all' || q === 'start') document.body.setAttribute('data-print', q);
+    })();
+  </script>
+</PostLayout>

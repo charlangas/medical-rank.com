@@ -1,0 +1,21 @@
+---
+import '../styles/post.css';
+const { title, description, kind = 'article', draft = false, noindex = false, canonical: canon = true } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canon && <link rel="canonical" href={canonicalUrl} />}
+    {(draft || noindex) && <meta name="robots" content={draft ? 'noindex,nofollow' : 'noindex,follow'} />}
+  </head>
+  <body class={kind}>
+    {draft && <div class="draft">DRAFT preview. Not published.</div>}
+    <slot name="nav" />
+    <main><slot /></main>
+  </body>
+</html>

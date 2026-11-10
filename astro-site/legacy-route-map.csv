@@ -1,0 +1,16 @@
+family,example_url (old, www host),approx_count,expected_status_on_new_site,mechanism,genuine_replacement_or_reason_to_keep,decision_needed
+homepage,/,1,200,new homepage,same URL,no
+index alias,/index,1,301 -> /,_redirects rule,homepage is the real equivalent,no
+sitemap alias,/sitemap.xml,1,301 -> /sitemap-index.xml,_redirects rule,old sitemap lists 25224 retired URLs; new sitemap replaces it,no
+pricing,/pricing,1,404,none (file absent),old page titled MediRank pricing; its canonical pointed to the homepage; no pricing exists now,confirm no price page planned
+city template,/city-guide,1,404,none,unfilled template titled "Dental SEO Guide for {City}",no
+error page,/404,1,404,none,not a content page,no
+specialty hubs (8),/dental /chiropractors /physical-therapy ...,8,404,none,redirect 301 only if a 1:1 specialty hub ships; none does,yes if you plan hubs
+state pages,/dental/colorado,1208,404,none,generated pages; no 1:1 replacement,no
+city pages,/dental/colorado/parker-seo,24000,404,none,generated pages; no 1:1 replacement,no
+blog posts (4),/blog/how-to-get-more-patients,4,404,none,topics differ from the Google Ads guide; their canonicals point at each other (not self-canonical); no genuine replacement,yes: confirm none has value to keep
+podcast page,/physical-therapy/pod,1,404 (default) - DECISION,none,podcast promo page that links out to the podcast platforms (recent commits added the YouTube, Facebook and podcast links); whether anyone links to the page is unknown (check Search Console links and the platform descriptions); not in old sitemap,YES: preserve or retire
+www host,https://www.medical-rank.com/*,all,301 -> apex same path,Cloudflare Redirect Rule (zone level; not in _redirects),www is what the old sitemap and canonicals use; apex is the new canonical,yes: add the rule at cutover
+netlify host,https://medicalrank.netlify.app/*,all,not controlled by Cloudflare,Netlify setting,keep a redirect or disable the Netlify site after cutover,yes
+non-canonical slash,/guides/x (no slash),new pages,307 -> /guides/x/,Workers assets html_handling default,canonical tag points at the slash form,no
+unknown path,/this-page-does-not-exist,any,404 with 404.html body,assets not_found_handling=404-page,no catch-all 200 rule exists,no
