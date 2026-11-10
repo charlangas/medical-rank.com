@@ -40,4 +40,4 @@ You do every step here; nothing has been changed. Stop and ask for help at any s
 - [ ] Netlify certificates expire **2026-12-20** and may not renew while DNS points elsewhere: **end the rollback window by 2026-12-01**, or re-issue the Netlify certificates before staying longer.
 
 ## G. After the window closes (not before)
-- [ ] When Cloudflare is stable and the window has closed: delete the Netlify site (this also stops `medicalrank.netlify.app` serving the old pages). Then delete the `medical-rank-preview` Worker and any staging domain. Optionally set `workers_dev: false` was already the production default.
+- [ ] When Cloudflare is stable and the window has closed: delete the Netlify site (this also stops `medicalrank.netlify.app` serving the old pages). Then delete the `medical-rank-preview` Worker and any staging domain.
