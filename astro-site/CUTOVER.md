@@ -1,5 +1,7 @@
 # Cutover and rollback runbook: Netlify to Cloudflare Workers
 
+**You perform the Cloudflare and Porkbun steps; `CHECKLIST.md` is the ordered, tickable version of this runbook.** Decisions 2026-11-10: podcast route retired (404); Netlify site is deleted only after the rollback window; `info@medical-rank.com` alias created and tested by you; all existing mail records preserved unchanged.
+
 Nothing here has been run. Stop points: nameservers, DNS records and the production custom domain are untouched. Netlify keeps serving production until the final step.
 
 ## Measured current state (2026-11-09, from outside; `dig`, `curl`)

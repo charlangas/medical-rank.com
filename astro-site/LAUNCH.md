@@ -3,13 +3,13 @@
 Astro is the production codebase and Cloudflare is the production host. The Netlify deployment is untouched and stays the rollback target. This file is the handoff; `CUTOVER.md` is the runbook. **Production hostnames, DNS and nameservers are unchanged.**
 
 ## Release revision
-- Branch `release/astro-cloudflare` (local, not pushed). Release revision **`7d8292fbe3d6`** (full: `7d8292fbe3d6…`, run `git rev-parse 7d8292fbe3d6`). Docs-only commits after it do not change the build (checked by rebuilding: dist manifest hash `f817919ac4db…` for the production build before and after).
-- Reproduce: `cd astro-site && nvm use && npm ci && npm run build && node scripts/verify-dist.mjs production` (Node 24, Wrangler pinned 4.159.0, lockfile committed).
-- Deploy commands (one script, refuses a dirty tree, tags the Worker version with the commit): `npm run release:preview` and `npm run release:production`. `node scripts/release.mjs production --dry-run` shows the command without running it.
+- Branch `release/astro-cloudflare` (local, not pushed). **Release revision `78dac0221948`** (full `78dac02219484b2ce63d23586fdd917d05b066b8`). Earlier preview build: `7d8292fbe3d6`. Docs-only commits do not change the build.
+- Reproduce: `cd astro-site && nvm use && npm ci && npm run build && node scripts/verify-dist.mjs production` (Node 24, Wrangler pinned 4.159.0, lockfile committed; 17 checks).
+- One script deploys (refuses a dirty tree, tags the Worker version with the commit): `npm run release:preview`, `npm run release:production`; `node scripts/release.mjs production --dry-run` shows the command without running it.
 
 ## Hosted preview
-- URL: **https://medical-rank-preview.carlos-e05.workers.dev** (Worker `medical-rank-preview`, workers.dev only, no custom domain; account `e0590b0e…`).
-- Cloudflare **deployment ID `4ed056c7-4676-4f09-84f8-966139998f7f`**, version ID `45816e36-1765-4cfe-8d60-e65ede33fe6c`, version tag `7d8292fbe3d6`, uploaded 2026-11-10T03:17:22Z.
+- **https://medical-rank-preview.carlos-e05.workers.dev** (Worker `medical-rank-preview`, workers.dev only, no custom domain, account `e0590b0e…`).
+- Current Cloudflare **deployment ID `560ff1ec-d458-4bd6-ab90-3597b4b97fd0`**, version `d393210a-7dbd-4bec-81ff-05dea90b2c10`, tag `78dac0221948`, deployed 2026-11-10. Previous: deployment `4ed056c7-4676-4f09-84f8-966139998f7f`, version `45816e36-…`, tag `7d8292fbe3d6`.
 - The production Worker `medical-rank` has **not** been created.
 
 ## Workers static assets configuration (checked against current Cloudflare docs)
@@ -38,9 +38,13 @@ Cloudflare's Version URL page does not mention any noindex behaviour, so I did n
 ## Content kept out of the deployed output
 The legacy archive (about 33,000 files at the repo root), the hypothetical benchmark route (draft; its source file remains in `src/content/posts/` and is not built) and every QA/pilot file under `research/` are not in `dist/`. `research/` is not committed to this branch.
 
-## Decisions I still need from you
-1. **Podcast route `/physical-therapy/pod`:** currently a 404 here. Retire it, or build a page for it before cutover (the one retired URL with a reason to keep).
-2. **Go-live date:** the guide's `published:` is still the placeholder 2026-11-08. Commit the real date before the production release (the release script needs a clean tree; this creates a new revision, so re-run the preview first).
-3. **Authorize the Cloudflare zone and nameserver stage** (it needs your Porkbun and Cloudflare logins; I cannot do it).
-4. **Old `medicalrank.netlify.app` after rollback:** my recommendation is to delete the Netlify site once the rollback window closes (see `CUTOVER.md`); say if you prefer the redirect stub.
-5. **Mailbox test and author bio** (unchanged): test `info@medical-rank.com` from an outside address; replace the bio sentence in `src/lib/authors.ts` if you have approved text.
+## Decisions recorded (2026-11-10)
+1. **`/physical-therapy/pod` retired**: real 404 (no redirect). The old page was canonicalised to `/physical-therapy/oregon`; the podcast stays on YouTube and Facebook.
+2. **Guide date 2026-11-08 accepted for now. Flag:** the guide cannot have been publicly readable before cutover, so on the production commit the date should be the **actual first public release date** (cutover day). Until then the build prints a reminder. Changing it needs a new commit and a preview re-run.
+3. **Cloudflare and Porkbun changes are yours.** `CHECKLIST.md` is the ordered list. I make no changes there.
+4. **Delete the old Netlify site only after the rollback window closes and Cloudflare is stable.** Not deleted; it is the rollback target.
+5. **Mail:** you create the `info@medical-rank.com` alias and test it from an outside account before launch. Every existing mail record (MX, SPF, DKIM, DMARC, verification TXT) must be copied unchanged.
+6. **Author bio unchanged** ("Medical Rank is run by Carlos Ochoa."). Hypothetical benchmark excluded from the build (source file stays in the repo, draft).
+
+## Legacy URLs
+See `LEGACY-URLS.md`. All 25,224 old sitemap URLs map to a real 404 except `/` (same), `/index` and `/sitemap.xml` (301). A 231-URL probe of every family on the preview had no mismatches. No Search Console traffic or link data was available to me, so the retirement list is by rule, pending your exports.
