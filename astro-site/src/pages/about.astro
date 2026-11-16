@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import { authors } from '../lib/authors';
+const a = authors['carlos-ochoa'];
+---
+<Base title="About Medical Rank" description="Medical Rank publishes marketing guidance for US medical practices and works with practices directly. Run by Carlos Ochoa.">
+  <div class="wrap">
+    <header class="pagehead">
+      <h1>About Medical Rank</h1>
+      <p class="lede">Medical Rank helps US doctors, practice owners and practice managers make better marketing decisions.</p>
+    </header>
+    <div class="split">
+    <div class="prose">
+      <h2>What we publish</h2>
+      <p>We write about four decisions practices face: being found in local search, paying for Google Ads, turning website visits into appointments, and setting budgets and choosing agencies. Our <a href="/guides/">guides</a> are sourced and checked by hand. Our <a href="/blog/">articles</a> are shorter and cover the questions practices search for most.</p>
+      <h2>How we make money</h2>
+      <p>Medical Rank is also a small marketing firm. We work with practices on local search, websites and Google Ads. When a page mentions our services, it says so plainly, and the guidance is written to be useful whether or not you ever contact us.</p>
+      <h2>What we don't do</h2>
+      <p>We don't promise rankings, publish testimonials we can't verify, or accept payment to recommend a vendor.</p>
+      <h2>Who runs it</h2>
+      <p>{a.bio}</p>
+      <h2>Contact</h2>
+      <p><a href="/contact/">Tell us about your practice</a>, or write to <a href="mailto:info@medical-rank.com">info@medical-rank.com</a>.</p>
+    </div>
+    <Figure ratio="4 / 5" label="Portrait of Carlos Ochoa" size="960 × 1200 px" caption="Carlos Ochoa" />
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,340 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-16T02:07:34Z",
+  "title": "Design System: Medical Rank",
+  "extensions": {
+    "colorMeta": {
+      "blue": {
+        "role": "primary",
+        "displayName": "Journal Blue",
+        "canonical": "oklch(37% 0.218 264)",
+        "tonalRamp": [
+          "oklch(15% 0.218 264)",
+          "oklch(27% 0.218 264)",
+          "oklch(39% 0.218 264)",
+          "oklch(50% 0.218 264)",
+          "oklch(62% 0.218 264)",
+          "oklch(73% 0.218 264)",
+          "oklch(85% 0.218 264)",
+          "oklch(95% 0.218 264)"
+        ]
+      },
+      "blue-bright": {
+        "role": "primary",
+        "displayName": "Interaction Blue",
+        "canonical": "oklch(54% 0.217 266)",
+        "tonalRamp": [
+          "oklch(15% 0.217 266)",
+          "oklch(27% 0.217 266)",
+          "oklch(39% 0.217 266)",
+          "oklch(50% 0.217 266)",
+          "oklch(62% 0.217 266)",
+          "oklch(73% 0.217 266)",
+          "oklch(85% 0.217 266)",
+          "oklch(95% 0.217 266)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(25% 0.033 269)",
+        "tonalRamp": [
+          "oklch(15% 0.033 269)",
+          "oklch(27% 0.033 269)",
+          "oklch(39% 0.033 269)",
+          "oklch(50% 0.033 269)",
+          "oklch(62% 0.033 269)",
+          "oklch(73% 0.033 269)",
+          "oklch(85% 0.033 269)",
+          "oklch(95% 0.033 269)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "canonical": "oklch(44% 0.037 267)",
+        "tonalRamp": [
+          "oklch(15% 0.037 267)",
+          "oklch(27% 0.037 267)",
+          "oklch(39% 0.037 267)",
+          "oklch(50% 0.037 267)",
+          "oklch(62% 0.037 267)",
+          "oklch(73% 0.037 267)",
+          "oklch(85% 0.037 267)",
+          "oklch(95% 0.037 267)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Pale Line",
+        "canonical": "oklch(92% 0.018 269)",
+        "tonalRamp": [
+          "oklch(15% 0.018 269)",
+          "oklch(27% 0.018 269)",
+          "oklch(39% 0.018 269)",
+          "oklch(50% 0.018 269)",
+          "oklch(62% 0.018 269)",
+          "oklch(73% 0.018 269)",
+          "oklch(85% 0.018 269)",
+          "oklch(95% 0.018 269)"
+        ]
+      },
+      "tint": {
+        "role": "neutral",
+        "displayName": "Tint",
+        "canonical": "oklch(97% 0.012 271)",
+        "tonalRamp": [
+          "oklch(15% 0.012 271)",
+          "oklch(27% 0.012 271)",
+          "oklch(39% 0.012 271)",
+          "oklch(50% 0.012 271)",
+          "oklch(62% 0.012 271)",
+          "oklch(73% 0.012 271)",
+          "oklch(85% 0.012 271)",
+          "oklch(95% 0.012 271)"
+        ]
+      },
+      "on-blue": {
+        "role": "neutral",
+        "displayName": "On-Blue",
+        "canonical": "oklch(93% 0.035 273)",
+        "tonalRamp": [
+          "oklch(15% 0.035 273)",
+          "oklch(27% 0.035 273)",
+          "oklch(39% 0.035 273)",
+          "oklch(50% 0.035 273)",
+          "oklch(62% 0.035 273)",
+          "oklch(73% 0.035 273)",
+          "oklch(85% 0.035 273)",
+          "oklch(95% 0.035 273)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "oklch(100% 0.000 0)",
+        "tonalRamp": [
+          "oklch(15% 0.000 0)",
+          "oklch(27% 0.000 0)",
+          "oklch(39% 0.000 0)",
+          "oklch(50% 0.000 0)",
+          "oklch(62% 0.000 0)",
+          "oklch(73% 0.000 0)",
+          "oklch(85% 0.000 0)",
+          "oklch(95% 0.000 0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The featured guide's headline on the front page. One per page."
+      },
+      "headline-page": {
+        "displayName": "Headline, page",
+        "purpose": "The h1 of hubs, listings and simple pages."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Row titles in ruled lists, tenets on the band, the closing aside heading."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "The sans summary under a display or page headline."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Interface and descriptive text; tabular numerals."
+      },
+      "reading": {
+        "displayName": "Reading",
+        "purpose": "Guides, articles and prose pages; running text capped at 36rem inside a 46rem column."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase heading of a ruled list or tinted box; never an eyebrow above a headline."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Bylines (with the topic link), dates, form hints."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The only easing curve (--ease); used by every transition and the masthead rule."
+      },
+      {
+        "name": "duration-state",
+        "value": "0.2s",
+        "purpose": "Colour, background, border and opacity changes on hover and focus."
+      },
+      {
+        "name": "duration-shift",
+        "value": "0.3s",
+        "purpose": "Transform on index rows: title slide and chevron settle."
+      },
+      {
+        "name": "rule-draw",
+        "value": "0.9s scaleX(0.12) to scaleX(1), origin left, once on load",
+        "purpose": "The masthead rule draws in. Removed under prefers-reduced-motion, as is every transition."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "reading-small",
+        "value": "640px"
+      },
+      {
+        "name": "stack",
+        "value": "52rem"
+      },
+      {
+        "name": "masthead-wrap",
+        "value": "60rem"
+      },
+      {
+        "name": "wide",
+        "value": "82rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main action: read the guide, send the message, tell us about your practice.",
+      "html": "<a class=\"ds-btn\" href=\"#\">Read the guide</a>",
+      "css": ".ds-btn { display: inline-block; background: var(--blue, #0023b0); color: var(--white, #fff); font-family: var(--sans, 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif); font-weight: 600; font-size: 1.0625rem; line-height: 1.2; padding: 0.95rem 1.4rem; text-decoration: none; border: 2px solid var(--blue, #0023b0); border-radius: 0; cursor: pointer; transition: background 0.2s var(--ease, cubic-bezier(0.16, 1, 0.3, 1)), border-color 0.2s var(--ease, cubic-bezier(0.16, 1, 0.3, 1)); } .ds-btn:hover { background: var(--blue-bright, #355fec); border-color: var(--blue-bright, #355fec); } .ds-btn:focus-visible { outline: 3px solid var(--blue-bright, #355fec); outline-offset: 3px; }"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "The second action beside a primary button.",
+      "html": "<a class=\"ds-btn-quiet\" href=\"#\">Open the worksheet</a>",
+      "css": ".ds-btn-quiet { display: inline-block; background: var(--blue, #0023b0); color: var(--white, #fff); font-family: var(--sans, 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif); font-weight: 600; font-size: 1.0625rem; line-height: 1.2; padding: 0.95rem 1.4rem; text-decoration: none; border: 2px solid var(--blue, #0023b0); border-radius: 0; cursor: pointer; transition: background 0.2s var(--ease, cubic-bezier(0.16, 1, 0.3, 1)), border-color 0.2s var(--ease, cubic-bezier(0.16, 1, 0.3, 1)); } .ds-btn-quiet { background: transparent; color: var(--blue, #0023b0); } .ds-btn-quiet:hover { background: var(--tint, #f3f6ff); } .ds-btn-quiet:focus-visible { outline: 3px solid var(--blue-bright, #355fec); outline-offset: 3px; }"
+    },
+    {
+      "name": "Small Button",
+      "kind": "button",
+      "refersTo": "button-small",
+      "description": "Masthead \"Talk to us\" and the closing aside on reading pages.",
+      "html": "<a class=\"ds-btn-small\" href=\"#\">Talk to us</a>",
+      "css": ".ds-btn-small { display: inline-block; background: var(--blue, #0023b0); color: var(--white, #fff); font-family: var(--sans, 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif); font-weight: 600; font-size: 1.0625rem; line-height: 1.2; padding: 0.95rem 1.4rem; text-decoration: none; border: 2px solid var(--blue, #0023b0); border-radius: 0; cursor: pointer; transition: background 0.2s var(--ease, cubic-bezier(0.16, 1, 0.3, 1)), border-color 0.2s var(--ease, cubic-bezier(0.16, 1, 0.3, 1)); } .ds-btn-small { padding: 0.65rem 1rem; font-size: 1rem; } .ds-btn-small:hover { background: var(--blue-bright, #355fec); border-color: var(--blue-bright, #355fec); } .ds-btn-small:focus-visible { outline: 3px solid var(--blue-bright, #355fec); outline-offset: 3px; }"
+    },
+    {
+      "name": "Masthead",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Serif nameplate, sans topic links and a small button over the 3px blue rule, which draws in once on load.",
+      "html": "<header class=\"ds-masthead\"><div class=\"ds-masthead-row\"><a class=\"ds-nameplate\" href=\"#\">Medical Rank</a><nav aria-label=\"Main\"><ul><li><a href=\"#\" aria-current=\"page\">Medical SEO</a></li><li><a href=\"#\">Google Ads</a></li><li><a href=\"#\">Websites</a></li><li><a href=\"#\">Guides</a></li></ul></nav></div></header>",
+      "css": ".ds-masthead-row { display: flex; align-items: center; gap: 1.5rem; min-height: 5.25rem; flex-wrap: wrap; } .ds-nameplate { font-family: var(--serif, 'Literata Variable', Georgia, serif); font-weight: 400; font-size: 1.75rem; line-height: 1; letter-spacing: -0.01em; color: var(--blue, #0023b0); text-decoration: none; margin-right: auto; white-space: nowrap; } .ds-masthead ul { display: flex; flex-wrap: wrap; gap: 0.2rem 1.6rem; list-style: none; margin: 0; padding: 0; } .ds-masthead nav a { font-family: var(--sans, 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif); color: var(--ink, #1c2233); text-decoration: none; font-size: 1rem; padding: 0.4rem 0; border-bottom: 2px solid transparent; } .ds-masthead nav a:hover, .ds-masthead nav a[aria-current=\"page\"] { color: var(--blue, #0023b0); border-bottom-color: var(--blue, #0023b0); } .ds-masthead a:focus-visible { outline: 3px solid var(--blue-bright, #355fec); outline-offset: 3px; } .ds-masthead::after { content: \"\"; display: block; height: 3px; background: var(--blue, #0023b0); transform-origin: left; animation: ds-rule 0.9s var(--ease, cubic-bezier(0.16, 1, 0.3, 1)) both; } @keyframes ds-rule { from { transform: scaleX(0.12); } to { transform: scaleX(1); } } @media (prefers-reduced-motion: reduce) { .ds-masthead::after { animation: none; } }"
+    },
+    {
+      "name": "Ruled Index",
+      "kind": "custom",
+      "refersTo": "index-row",
+      "description": "The replacement for cards: a labelled, ruled list of linked rows. Title turns blue and slides right with a chevron on hover and focus.",
+      "html": "<div class=\"ds-index\"><h2>Decisions we help with</h2><ul><li><a href=\"#\"><strong>Medical SEO</strong>Is your practice visible, and accurate, where nearby patients look?</a></li><li><a href=\"#\"><strong>Google Ads</strong>Are you paying for new patients, or for clicks and calls that look like them?</a></li></ul></div>",
+      "css": ".ds-index h2 { font-family: var(--sans, 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif); font-weight: 700; font-size: 0.875rem; line-height: 1.2; letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue, #0023b0); margin: 0; padding-bottom: 0.7rem; border-bottom: 1px solid var(--ink, #1c2233); } .ds-index ul { list-style: none; margin: 0; padding: 0; } .ds-index li { border-bottom: 1px solid var(--line, #dfe4f1); } .ds-index li > a { display: block; position: relative; padding: 1.05rem 1.6rem 1.1rem 0; text-decoration: none; color: var(--muted, #4a5368); font-family: var(--sans, 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif); font-size: 1rem; line-height: 1.45; } .ds-index li strong { display: block; font-family: var(--serif, 'Literata Variable', Georgia, serif); font-weight: 400; font-size: 1.6rem; line-height: 1.15; color: var(--ink, #1c2233); margin-bottom: 0.25rem; transition: color 0.2s var(--ease, cubic-bezier(0.16, 1, 0.3, 1)), transform 0.3s var(--ease, cubic-bezier(0.16, 1, 0.3, 1)); } .ds-index li > a::after { content: \"\"; position: absolute; right: 0.15rem; top: 1.55rem; width: 0.6rem; height: 0.6rem; border-top: 2px solid var(--blue, #0023b0); border-right: 2px solid var(--blue, #0023b0); transform: rotate(45deg) translate(-4px, 4px); opacity: 0; transition: opacity 0.2s var(--ease, cubic-bezier(0.16, 1, 0.3, 1)), transform 0.3s var(--ease, cubic-bezier(0.16, 1, 0.3, 1)); } .ds-index li > a:hover strong, .ds-index li > a:focus-visible strong { color: var(--blue, #0023b0); transform: translateX(0.35rem); } .ds-index li > a:hover::after, .ds-index li > a:focus-visible::after { opacity: 1; transform: rotate(45deg); } .ds-index li > a:focus-visible { outline: 3px solid var(--blue-bright, #355fec); outline-offset: 3px; } @media (prefers-reduced-motion: reduce) { .ds-index li strong, .ds-index li > a::after { transition: none; } }"
+    },
+    {
+      "name": "Numbered Steps",
+      "kind": "custom",
+      "refersTo": "index-row",
+      "description": "Unlinked ruled rows with a blue serif numeral; used for what a first conversation covers.",
+      "html": "<ol class=\"ds-steps\"><li><div><strong>How patients find you today</strong>We look at your Google listing, your website and any ads you run, with you.</div></li><li><div><strong>What is and isn't working</strong>You tell us where new patients come from. We tell you what we see.</div></li></ol>",
+      "css": ".ds-steps { margin: 0; padding: 0; list-style: none; counter-reset: ds-step; } .ds-steps li { counter-increment: ds-step; display: grid; grid-template-columns: 2.6rem 1fr; padding: 1.05rem 0; border-bottom: 1px solid var(--line, #dfe4f1); color: var(--muted, #4a5368); font-family: var(--sans, 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif); font-size: 1.0625rem; line-height: 1.6; } .ds-steps li::before { content: counter(ds-step); font-family: var(--serif, 'Literata Variable', Georgia, serif); font-weight: 400; font-size: 1.5rem; line-height: 1.2; color: var(--blue, #0023b0); } .ds-steps strong { display: block; font-family: var(--serif, 'Literata Variable', Georgia, serif); font-weight: 400; font-size: 1.5rem; line-height: 1.2; color: var(--ink, #1c2233); margin-bottom: 0.3rem; }"
+    },
+    {
+      "name": "Short-Answer Box",
+      "kind": "card",
+      "refersTo": "answer-box",
+      "description": "The tinted aside: pale blue field under a 3px blue rule, holding the plain answer to the page's question.",
+      "html": "<p class=\"ds-answer\"><strong>Short answer</strong>Your Google Ads report counts events. Your booking report counts appointments.</p>",
+      "css": ".ds-answer { background: var(--tint, #f3f6ff); border-top: 3px solid var(--blue, #0023b0); padding: 1.4rem 1.6rem 1.5rem; margin: 0; max-width: 44rem; font-family: var(--sans, 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif); font-size: 1.15rem; line-height: 1.5; color: var(--ink, #1c2233); } .ds-answer strong { display: block; font-weight: 700; font-size: 0.875rem; line-height: 1.2; letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue, #0023b0); margin-bottom: 0.5rem; }"
+    },
+    {
+      "name": "Band",
+      "kind": "custom",
+      "refersTo": "band",
+      "description": "Full-bleed blue section with white serif tenets divided by hairlines. Used once on the front page.",
+      "html": "<section class=\"ds-band\"><ul><li><h3>We don't promise rankings.</h3><p>Search results depend on many things nobody controls.</p></li><li><h3>We name our sources.</h3><p>Guides cite the documents they rely on. <a href=\"#\">Read how</a></p></li></ul></section>",
+      "css": ".ds-band { background: var(--blue, #0023b0); color: var(--white, #fff); padding: 2rem; } .ds-band ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, 0.35); } .ds-band li { padding: 1.6rem 2rem 0.4rem 0; } .ds-band li + li { padding-left: 2rem; border-left: 1px solid rgba(255, 255, 255, 0.35); } .ds-band h3 { font-family: var(--serif, 'Literata Variable', Georgia, serif); font-weight: 400; font-size: 1.6rem; line-height: 1.15; color: var(--white, #fff); margin: 0 0 0.6rem; } .ds-band p { margin: 0; font-family: var(--sans, 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif); font-size: 1.0625rem; line-height: 1.6; color: var(--on-blue, #dfe6ff); } .ds-band a { color: var(--white, #fff); text-underline-offset: 0.18em; } .ds-band a:hover { color: var(--blue-bright, #355fec); } .ds-band a:focus-visible { outline: 3px solid var(--white, #fff); outline-offset: 3px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Contact form field: label above, square white field, blue focus ring flush to the edge.",
+      "html": "<label class=\"ds-field\">Practice website <span>Optional</span><input type=\"url\" placeholder=\"https://\"></label>",
+      "css": ".ds-field { display: grid; gap: 0.4rem; max-width: 36rem; font-family: var(--sans, 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif); font-weight: 600; font-size: 1.0625rem; color: var(--ink, #1c2233); } .ds-field span { font-weight: 400; font-size: 0.9375rem; color: var(--muted, #4a5368); } .ds-field input { font: inherit; font-weight: 400; color: var(--ink, #1c2233); background: var(--white, #fff); border: 1px solid var(--muted, #4a5368); padding: 0.8rem 0.9rem; border-radius: 0; width: 100%; box-sizing: border-box; } .ds-field input:focus-visible { outline: 3px solid var(--blue-bright, #355fec); outline-offset: 0; border-color: var(--blue, #0023b0); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Journal Front Page",
+    "overview": "Medical Rank is set like the front page of a clinical journal. A serif nameplate sits over a heavy blue rule, the page opens on a real question at display size with its short answer beside a ruled index, and everything that follows is typeset rather than boxed. White paper, one deep blue, dark ink, hairline rules. The surface is flat, square and quiet: there are no shadows, no gradients, no rounded corners, no images and no icons in the shipped build, and structure comes entirely from type size, rule weight and whitespace.\n\nDensity is that of a well-set periodical: generous at the top of a section, tight inside a list. Collections of anything (topics, guides, services, steps, questions) are ruled lists whose rows are a serif title over a sans description. The one loud surface is a full-bleed blue band; the one tinted surface is the short-answer box with a blue rule across its top. Reading pages narrow to a single measured column in the serif.\n\nMotion is nearly absent and always structural: the masthead rule draws in once on load, and index rows shift their title into blue with an arrow on hover and focus. Both stop under reduced-motion.",
+    "keyCharacteristics": [
+      "White ground, one deep blue, dark blue-grey ink; a brighter blue appears only on hover and focus.",
+      "Literata at regular weight for every headline and row title; Atkinson Hyperlegible Next for interface, labels and summaries.",
+      "Rules, not boxes: a 3px blue rule for the masthead, footer and tinted asides; 1px ink under list headings; 1px pale line between rows.",
+      "Square corners everywhere, no shadows, no gradients.",
+      "Ruled index lists in place of cards.",
+      "Two widths: an 82rem page and a 46rem reading column with running text capped at 36rem."
+    ],
+    "rules": [
+      {
+        "name": "The One Blue Rule",
+        "body": "Blue is the only hue. Journal Blue carries brand, links and structure; Interaction Blue exists only for hover and focus. The sole exceptions in the build are the contact form's error and success messages, which are states, not palette.",
+        "section": "colors"
+      },
+      {
+        "name": "The Rule Weight Rule",
+        "body": "Three rules, three meanings. 3px Journal Blue marks the masthead, the footer and the top of a tinted aside. 1px Ink sits under the heading of a list. 1px Pale Line separates rows and sections. 2px Journal Blue is reserved for interactive edges: the button border and the active navigation underline.",
+        "section": "colors"
+      },
+      {
+        "name": "The Regular Serif Rule",
+        "body": "Literata is always weight 400 on screen. Headlines gain emphasis by size and tight tracking, never by weight. Bold belongs to the sans: buttons at 600, labels at 700.",
+        "section": "typography"
+      },
+      {
+        "name": "The Label Is A Heading Rule",
+        "body": "The uppercase blue label is the heading of a ruled list or the label of a tinted box. It is never stacked above a larger headline as an introduction to it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper Rule",
+        "body": "Surfaces are ink on paper. A thing is set apart by a rule above it or a tint behind it, never by a shadow or a lift, at rest or on hover.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep every corner square (0 radius) and every surface flat: no shadows, no gradients.",
+      "Do present collections as ruled lists: uppercase blue label, 1px Ink rule, rows separated by 1px Pale Lines, serif title over sans description.",
+      "Do set every headline and row title in Literata at weight 400 and let size carry the hierarchy.",
+      "Do use the 3px Journal Blue rule only for the masthead, the footer and the top edge of a tinted aside.",
+      "Do cap running text at 36rem and keep reading pages to one left-aligned column.",
+      "Do keep the global focus outline (3px Interaction Blue, 3px offset; white on the band).",
+      "Do honour reduced motion: every animation and transition is removed under `prefers-reduced-motion`.",
+      "Do keep reading pages and worksheets printable: masthead, footer and closing aside are hidden in print."
+    ],
+    "donts": [
+      "Don't introduce a second hue. Blue is the only colour; red and green appear only as form status text.",
+      "Don't use Interaction Blue (#355fec) as a resting colour. It is for hover and focus.",
+      "Don't put guides, topics or services in cards, tiles or shadowed panels.",
+      "Don't set serif headings in bold on screen.",
+      "Don't stack an uppercase label above a larger headline as an eyebrow; a label heads a list or a tinted box.",
+      "Don't round corners on buttons, inputs or boxes.",
+      "Don't add motion beyond the masthead rule's single draw-in and the 0.2–0.3s hover transitions."
+    ]
+  }
+}

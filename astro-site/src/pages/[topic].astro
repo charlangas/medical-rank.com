@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import ItemList from '../components/ItemList.astro';
+import { topics } from '../lib/topics';
+import { itemsForTopic } from '../lib/content';
+
+export function getStaticPaths() {
+  return topics.map((t) => ({ params: { topic: t.slug }, props: { t } }));
+}
+const { t } = Astro.props;
+const items = await itemsForTopic(t.slug);
+// A hub with nothing to point to is kept out of the index and the sitemap until it has a guide or article.
+const thin = items.filter((i) => i.live).length === 0;
+---
+<Base title={`${t.title} | Medical Rank`} description={t.decision + ' Guides and questions for US medical practices.'} noindex={thin}>
+  <div class="wrap">
+    <header class="pagehead with-figure">
+      <div>
+        <h1>{t.title}</h1>
+        <p class="lede">{t.decision}</p>
+        <p>{t.intro}</p>
+      </div>
+      <Figure ratio="3 / 2" label={`Photograph or illustration for ${t.nav}`} size="1200 × 800 px" />
+    </header>
+    <section class="index wide open" style="padding-bottom:3rem">
+      <h2>Guides and articles</h2>
+      <ItemList items={items} empty="We have not published on this topic yet. The questions below are a good place to start." />
+    </section>
+  </div>
+  <section class="section">
+    <div class="wrap cols">
+      <div>
+        <h2 class="label">Questions worth asking</h2>
+        <ul class="checks">{t.questions.map((q) => <li>{q}</li>)}</ul>
+      </div>
+      <div>
+        <h2 class="label">Have in front of you</h2>
+        <ul class="plain">{t.bring.map((b) => <li>{b}</li>)}</ul>
+        <p class="note" style="margin-top:1.6rem">Stuck on one of these? <a href="/contact/">Tell us about your practice</a> and we will say what we see.</p>
+      </div>
+    </div>
+  </section>
+</Base>

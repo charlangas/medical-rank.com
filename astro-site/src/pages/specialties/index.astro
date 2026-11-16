@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import { liveSpecialties } from '../../lib/content';
+const list = (await liveSpecialties()).sort((a, b) => a.data.name.localeCompare(b.data.name));
+---
+<Base title="Marketing by medical specialty | Medical Rank" description="Marketing guidance for specific medical specialties." noindex={list.length === 0}>
+  <div class="wrap">
+    <header class="pagehead">
+      <h1>By specialty</h1>
+      <p class="lede">Growth problems differ by specialty. These pages collect what we have written for each one.</p>
+    </header>
+    <section class="index wide">
+      <h2>Specialties</h2>
+      {list.length === 0 ? <p class="empty">Specialty pages are being written. Our <a href="/guides/">guides</a> apply to most practices in the meantime.</p> : (
+        <ul>{list.map((s) => <li><a href={`/specialties/${s.id}/`}><strong>{s.data.name}</strong><p>{s.data.summary}</p></a></li>)}</ul>
+      )}
+    </section>
+  </div>
+</Base>

@@ -48,3 +48,14 @@ The legacy archive (about 33,000 files at the repo root), the hypothetical bench
 
 ## Legacy URLs
 See `LEGACY-URLS.md`. All 25,224 old sitemap URLs map to a real 404 except `/` (same), `/index` and `/sitemap.xml` (301). A 231-URL probe of every family on the preview had no mismatches. No Search Console traffic or link data was available to me, so the retirement list is by rule, pending your exports.
+
+## Redesign in the working tree (2026-11-15, uncommitted, not deployed)
+Everything above describes release revision `78dac0221948`. The working tree now holds a full redesign that has **not** been committed, previewed on Cloudflare or released:
+- New shell and design ("Journal Front Page"): `src/layouts/Base.astro`, `src/styles/site.css`, self-hosted Literata and Atkinson Hyperlegible Next. `public/index.html` and `public/home.css` are removed; the homepage is `src/pages/index.astro`.
+- New pages: four topic hubs (`/medical-seo/`, `/google-ads/`, `/website-conversion/`, `/marketing-measurement/`), `/guides/`, `/blog/`, `/about/`, `/methodology/`, `/contact/`, `/privacy/`, `/specialties/`.
+- New `blog` collection (`src/content/blog`), written by the SEO engine (`~/Documents/seo-engine/configs/medical-rank.yaml`). Draft files and future-dated files are not built.
+- A page with a `noindex` tag (worksheets, a hub or index with nothing published) is removed from the sitemap by `scripts/prune-sitemap.mjs`, which every build script now runs.
+- `scripts/verify-dist.mjs` was updated: 28 checks on the current tree, including that every sitemap URL is built, indexable and self-canonical and that no retired legacy path is built.
+- Checked locally: production and preview builds, `verify-dist` for both targets, worksheet print (1, 6 and 9 pages) and guide print (5 pages).
+- Image placeholders: `src/components/Figure.astro` holds room for images on the homepage (2), each topic hub, the about page and the guide. `verify-dist.mjs production` **fails while any placeholder remains**, so supply the images (or remove the slots) before a production release; preview builds allow them. Guides and articles take `image` and `imageAlt` in frontmatter.
+- Not done: the contact form's Worker endpoint (the page shows an email button until `PUBLIC_CONTACT_ENDPOINT` is set at build), specialty hub content, an approved author bio, and a new Cloudflare preview deploy. `CHECKLIST.md` section E still lists the old sitemap expectation ("homepage and guide only").

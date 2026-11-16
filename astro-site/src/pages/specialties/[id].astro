@@ -1,0 +1,22 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ItemList from '../../components/ItemList.astro';
+import { allItems, liveSpecialties } from '../../lib/content';
+import { isLive } from '../../lib/release';
+
+export async function getStaticPaths() {
+  return (await liveSpecialties()).map((s) => ({ params: { id: s.id }, props: { s } }));
+}
+const { s } = Astro.props;
+const { Content } = await render(s);
+const res = s.data.match.map((m) => new RegExp(m, 'i'));
+const items = (await allItems()).filter((i) => res.some((r) => r.test(i.title)));
+---
+<Base title={`${s.data.title} | Medical Rank`} description={s.data.summary} draft={!isLive(s.data.status)}>
+  <div class="wrap">
+    <header class="pagehead"><h1>{s.data.title}</h1><p class="lede">{s.data.summary}</p></header>
+    <div class="prose"><Content /></div>
+    <section class="index wide" style="padding-top:3rem"><h2>Guides and articles</h2><ItemList items={items} /></section>
+  </div>
+</Base>

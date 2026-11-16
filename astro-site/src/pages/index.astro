@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import ItemList from '../components/ItemList.astro';
+import { topics } from '../lib/topics';
+import { allItems, guides, longDate, ymd } from '../lib/content';
+import { isLive } from '../lib/release';
+import { authors } from '../lib/authors';
+
+// The lead is the most recently published guide. Everything else published follows in the ruled list.
+const live = (await guides()).filter((g) => isLive(g.data.internal.status))
+  .sort((a, b) => (b.data.published?.getTime() ?? 0) - (a.data.published?.getTime() ?? 0));
+const lead = live[0];
+const leadUrl = lead && `/guides/${lead.data.slug}/`;
+const more = (await allItems()).filter((i) => i.live && i.url !== leadUrl).slice(0, 6);
+const leadTopic = lead && topics.find((t) => t.slug === lead.data.topic);
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'Organization', name: 'Medical Rank', url: 'https://medical-rank.com/',
+  email: 'info@medical-rank.com', founder: { '@type': 'Person', name: 'Carlos Ochoa' },
+};
+---
+<Base title="Medical Rank | Marketing guidance for medical practices" description="Independent guides that help US doctors and practice owners judge their SEO, Google Ads, website and agency, and decide what to do next." jsonLd={jsonLd}>
+  <div class="wrap">
+    <h1 class="strap"><strong>Marketing guidance for US medical practices,</strong> written for your side of the table.</h1>
+    <div class="lead">
+      {lead && (
+        <section aria-label="Featured guide">
+          <h2><a href={leadUrl}>{lead.data.title.split('?')[0] + (lead.data.title.includes('?') ? '?' : '')}</a></h2>
+          <p class="lede">{lead.data.summary}</p>
+          {lead.data.shortAnswer && <p class="answer"><strong>Short answer</strong>{lead.data.shortAnswer.split('. ').slice(0, 3).join('. ') + '.'}</p>}
+          <div class="actions">
+            <a class="btn" href={leadUrl}>Read the guide</a>
+            {lead.data.worksheet && <a class="btn quiet" href={`/worksheets/${lead.data.worksheet}/`}>Open the worksheet</a>}
+          </div>
+          <p class="meta">Guide{leadTopic && <> · <a href={`/${leadTopic.slug}/`}>{leadTopic.nav}</a></>} · By {authors[lead.data.author]?.name}{lead.data.published && <> · <time datetime={ymd(lead.data.published)}>{longDate(lead.data.published)}</time></>}</p>
+        </section>
+      )}
+      <aside class="index" aria-labelledby="decisions">
+        <h2 id="decisions">Decisions we help with</h2>
+        <ul>
+          {topics.map((t) => (
+            <li><a href={`/${t.slug}/`}><strong>{t.nav === 'Websites' ? 'Your website' : t.nav === 'Measurement' ? 'Budgets and agencies' : t.nav}</strong>{t.decision}</a></li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </div>
+
+  <div class="wrap feature-figure">
+    <Figure ratio="21 / 9" label="Wide photograph for the front page, for example a practice front desk or a clinician at a computer" size="2400 × 1030 px" />
+  </div>
+
+  {more.length > 0 && (
+    <section class="section">
+      <div class="wrap index wide">
+        <h2>More to read</h2>
+        <ItemList items={more} />
+        <p style="margin:1.6rem 0 0"><a href="/guides/">All guides</a> · <a href="/blog/">All articles</a></p>
+      </div>
+    </section>
+  )}
+
+  <section class="section band">
+    <div class="wrap">
+      <h2>How we work</h2>
+      <p class="intro">Medical Rank publishes guidance and also takes on clients. These are the rules we hold both to.</p>
+      <ul class="tenets">
+        <li><h3>We don't promise rankings.</h3><p>Search results depend on many things nobody controls. We focus on work within a practice's reach, and on measuring what it produces.</p></li>
+        <li><h3>We name our sources.</h3><p>Guides cite the documents they rely on and the date we checked them, so you can check them too.</p></li>
+        <li><h3>We say where the evidence stops.</h3><p>If a report can't tell you something, we say so instead of estimating it.</p></li>
+      </ul>
+      <p style="margin:2.2rem 0 0"><a href="/methodology/">Read how we research and write</a></p>
+    </div>
+  </section>
+
+  <section class="section" id="work-with-us">
+    <div class="wrap">
+      <h2>Work with Medical Rank</h2>
+      <div class="split" style="margin-bottom:2.4rem"><p class="intro" style="margin:0">We help independent physicians, specialty clinics and small multi-location practices in the United States get found in local search, turn website visits into appointment requests, and see which marketing brings in patients.</p><Figure ratio="3 / 2" label="Photograph for the services section" size="1200 × 800 px" /></div>
+      <div class="cols">
+        <div>
+          <h3 class="label">What we do</h3>
+          <dl class="deflist">
+            <div><dt>Local search</dt><dd>Your Google Business Profile, listings and local search presence, so patients near you see accurate, complete information.</dd></div>
+            <div><dt>Website and landing pages</dt><dd>Pages that answer what a patient is looking for and make the next step, calling or requesting an appointment, easy.</dd></div>
+            <div><dt>Google Ads</dt><dd>Search advertising run with healthcare advertising policies in mind, and measured against appointment requests rather than clicks.</dd></div>
+          </dl>
+        </div>
+        <div>
+          <h3 class="label">What a first conversation covers</h3>
+          <ol class="steps">
+            <li><div><strong>How patients find you today</strong>We look at your Google listing, your website and any ads you run, with you.</div></li>
+            <li><div><strong>What is and isn't working</strong>You tell us where new patients come from and where you're unsure. We tell you what we see.</div></li>
+            <li><div><strong>Whether we're a fit</strong>If we can help, we outline where we would start. If we can't, we'll say so.</div></li>
+          </ol>
+        </div>
+      </div>
+      <p style="margin:2.4rem 0 0"><a class="btn" href="/contact/">Tell us about your practice</a></p>
+      <p class="note" style="margin-top:1.2rem">Medical Rank is run by Carlos Ochoa. <a href="/about/">About Medical Rank</a></p>
+    </div>
+  </section>
+</Base>

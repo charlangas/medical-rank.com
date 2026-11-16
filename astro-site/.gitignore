@@ -7,3 +7,8 @@ dist/
 
 print-previews/
 legacy-url-inventory.csv
+
+# Design working files (screenshots, decision sketches)
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/questions/
