@@ -70,3 +70,12 @@ Everything above describes release revision `78dac0221948`. The working tree now
 - Validation: production build, strict release verification including both sitemap directions and local links/declared anchors; browser checks at desktop, 375px and 320px; FAQ keyboard expansion; service-to-contact navigation; Resources-to-guide-to-worksheet path; worksheet runtime anchor and three print controls.
 - Local Wrangler runtime caches are ignored and removed from version control. Release assets are built from `astro-site/`; the root legacy archive and local research outputs stay out of deployment.
 - Production migration prerequisites in `CUTOVER.md` still apply. The latest observed production DNS was Porkbun nameservers, Netlify apex A records, and `www CNAME medicalrank.netlify.app`. A production-domain release requires the hosting choice and applicable cutover steps.
+
+### Deployed agency preview
+
+- URL: https://medical-rank-preview.carlos-e05.workers.dev
+- Code revision/tag: `c85b0ba3e1ad`.
+- Cloudflare version: `f34daf5d-2beb-4352-97e8-58f66e0e508e`, deployed 2026-11-16.
+- Rebuilt from the clean commit using `node scripts/release.mjs preview` (`npm ci`, strict build, preview hardening, verification, then deploy). Dependency audit reported no vulnerabilities.
+- Remote verification passed for the homepage, both service pages, Resources, contact, guide and worksheet (200); slash normalization (307); `/index` (301); and retired/missing URLs (404). Every checked preview response carries `X-Robots-Tag: noindex, nofollow`.
+- Documentation-only commits after this tag do not change the deployed site. Production is still the legacy Netlify site pending the hosting decision and domain cutover.
