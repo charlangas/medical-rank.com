@@ -87,3 +87,6 @@ Everything above describes release revision `78dac0221948`. The working tree now
 - Registrar sign-in is required to obtain the complete authoritative DNS export. Public DNS queries alone cannot establish the full set of mail and verification records.
 - The guide's planned first production release date is 2026-11-16. If the actual cutover happens on another day, update that date and rebuild before the production-domain release.
 - Production DNS changes remain gated on the complete registrar export, a matching staged Cloudflare zone and the other prerequisites in `CUTOVER.md`.
+- Production build preparation passed from `3d1ef07d9e10` using `node scripts/release.mjs production --dry-run`. All 18 pages build and production verification passes; this command did not deploy a Worker.
+- Netlify rollback deployment observed in the deployment dashboard: `67100d3f4b48fd000882034f`, production `main@716ad9737`, published 2024-10-16. Public dashboard access identifies the deployment but does not permit locking automatic publishing.
+- Read-only public DNS baseline saved locally under `research/cloudflare-cutover/public-dns-before.json`. It is explicitly incomplete and is not a substitute for the registrar export.
