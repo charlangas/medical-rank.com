@@ -1,16 +1,10 @@
 ---
-// One image slot. With `src` it renders the image; without it, a labelled placeholder that holds the
-// same space, so adding the image later moves nothing. Placeholders are counted by verify-dist and
-// block a production release.
-const { src, alt = '', caption, ratio = '16 / 9', label = 'Image', size, class: cls = '' } = Astro.props;
+// Optional approved imagery. Pages remain complete without an asset; never show an empty slot.
+const { src, alt = '', caption, ratio = '16 / 9', class: cls = '' } = Astro.props;
 ---
-<figure class:list={['figure', cls]}>
-  {src ? (
+{src && (
+  <figure class:list={['figure', cls]}>
     <img src={src} alt={alt} loading="lazy" decoding="async" style={`aspect-ratio:${ratio}`} />
-  ) : (
-    <div class="placeholder" data-placeholder role="img" aria-label={`Placeholder for an image: ${label}`} style={`aspect-ratio:${ratio}`}>
-      <span><strong>Image to come</strong>{label}{size && <small>{size}</small>}</span>
-    </div>
-  )}
-  {caption && <figcaption>{caption}</figcaption>}
-</figure>
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+)}

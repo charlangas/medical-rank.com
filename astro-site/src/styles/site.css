@@ -1,4 +1,4 @@
-/* Medical Rank: journal front page. Tokens first; everything else uses them. */
+/* Medical Rank: agency services and editorial resources. Shared tokens come first. */
 :root {
   --blue: #0023b0;
   --blue-bright: #355fec;
@@ -66,6 +66,10 @@ img, svg { max-width: 100%; }
 .btn.quiet { background: transparent; color: var(--blue); }
 .btn.quiet:hover { background: var(--tint); color: var(--blue); border-color: var(--blue); }
 .btn.small { padding: 0.65rem 1rem; font-size: 1rem; }
+.band .btn.quiet { border-color: var(--white); color: var(--white); }
+.band .btn.quiet:hover { background: var(--white); color: var(--blue); }
+.band .btn.inverse { background: var(--white); border-color: var(--white); color: var(--blue); }
+.band .btn.inverse:hover { background: var(--tint); border-color: var(--tint); color: var(--blue); }
 
 /* Masthead */
 .masthead { position: relative; }
@@ -92,13 +96,7 @@ img, svg { max-width: 100%; }
   .nameplate { font-size: 1.5rem; }
 }
 
-/* Front page lead */
-.strap { font: 400 1.0625rem/1.4 var(--sans); color: var(--muted); margin: 0; padding: 1.1rem 0 0; }
-.strap strong { color: var(--ink); font-weight: 600; }
-.lead { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); padding: clamp(1.8rem, 3.5vw, 2.75rem) 0 clamp(3rem, 6vw, 5rem); align-items: stretch; }
-.lead h2 { font-size: clamp(2.4rem, 5vw, 4.4rem); line-height: 1.04; letter-spacing: -0.025em; margin: 0 0 1.3rem; font-optical-sizing: auto; }
-.lead h2 a { color: inherit; text-decoration: none; }
-.lead h2 a:hover { color: var(--blue); }
+/* Summaries and reading metadata */
 .lede { font-size: clamp(1.15rem, 1.6vw, 1.45rem); line-height: 1.45; color: var(--muted); max-width: 42rem; margin: 0; }
 .meta { font-size: 0.9375rem; color: var(--muted); margin: 1.1rem 0 0; }
 .meta a { color: var(--blue); font-weight: 600; text-decoration: none; }
@@ -106,17 +104,51 @@ img, svg { max-width: 100%; }
 .answer strong { display: block; font: 700 0.875rem/1.2 var(--sans); letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.5rem; }
 .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.9rem; }
 
-/* Desktop: a column rule divides lead and index, and the index rows share the lead's full height. */
-@media (min-width: 60.01rem) {
-  .lead > .index { display: flex; flex-direction: column; border-left: 1px solid var(--line); padding-left: clamp(1.5rem, 3vw, 3rem); }
-  .lead > .index ul { flex: 1; display: grid; grid-auto-rows: 1fr; }
-  .lead > .index li { display: flex; }
-  .lead > .index li > a { display: flex; flex-direction: column; justify-content: center; width: 100%; }
-  .lead > .index li:last-child { border-bottom: 0; }
-  .lead > .index li strong { font-size: 1.85rem; }
-  .lead > .index li > a::after { top: 50%; margin-top: -0.3rem; }
+/* Agency homepage */
+.agency-hero { padding: clamp(3rem, 6.5vw, 5.5rem) 0 clamp(3rem, 6vw, 5rem); }
+.agency-context { margin: 0 0 1.25rem; font-size: 0.9375rem; color: var(--muted); }
+.agency-hero h1 { max-width: 60rem; margin: 0 0 1.6rem; font-size: clamp(2.7rem, 5.8vw, 5rem); line-height: 1.06; letter-spacing: -0.03em; }
+.agency-hero .lede { max-width: 46rem; }
+.agency-hero .actions { margin-top: 2rem; gap: 1rem 1.5rem; align-items: center; }
+.agency-secondary { padding: 0.5rem 0; }
+.agency-reassurance { max-width: 38rem; margin: 1.1rem 0 0; color: var(--muted); font-size: 0.9375rem; }
+.agency-services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 5vw, 4.5rem); }
+.agency-service { border-top: 3px solid var(--blue); padding-top: 1.3rem; display: flex; flex-direction: column; align-items: start; }
+.agency-service-name { margin: 0 0 0.75rem; color: var(--blue); font-size: 0.9375rem; }
+.agency-service h3 { margin: 0 0 1rem; font-size: clamp(1.8rem, 2.8vw, 2.3rem); line-height: 1.15; max-width: 25rem; }
+.agency-service > p:not(.agency-service-name) { margin: 0 0 1rem; color: var(--muted); max-width: 34rem; }
+.agency-service .plain { margin-bottom: 1.5rem; align-self: stretch; }
+.agency-service > a { margin-top: auto; padding: 0.4rem 0; }
+.agency-start { background: var(--tint); border-top: 0; }
+.agency-prompt { display: flex; align-items: center; justify-content: space-between; gap: 2rem 3rem; }
+.agency-prompt h2 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; margin: 0 0 1rem; letter-spacing: -0.02em; }
+.agency-prompt p { margin: 0; max-width: 43rem; color: var(--muted); }
+.agency-prompt > .btn { flex-shrink: 0; }
+.agency-process { counter-reset: agency-step; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; padding: 0; margin: 2.25rem 0 0; }
+.agency-process li { counter-increment: agency-step; border-top: 1px solid var(--line); padding-top: 1.25rem; }
+.agency-process li::before { content: '0' counter(agency-step); display: block; color: var(--blue); font-size: 0.9375rem; margin-bottom: 1rem; }
+.agency-process h3 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 0.75rem; }
+.agency-process p { color: var(--muted); margin: 0; }
+.agency-founder { margin: 2rem 0 0; border-top: 1px solid var(--line); padding-top: 1.25rem; color: var(--muted); }
+.agency-link { margin: 1.5rem 0 0; }
+.agency-email { margin: 1.4rem 0 0; font-size: 1rem; }
+.agency-home .footer { margin-top: 0; }
+
+/* Buying questions, shared by the homepage and service pages */
+.faq { margin-top: 1.75rem; max-width: 56rem; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; padding: 1.1rem 0; font-size: 1.125rem; font-weight: 600; }
+.faq summary::marker { color: var(--blue); }
+.faq p { margin: 0 0 1.2rem; max-width: 46rem; color: var(--muted); }
+
+@media (max-width: 60rem) { .agency-prompt { align-items: start; flex-direction: column; } }
+@media (max-width: 52rem) { .agency-services, .agency-process { grid-template-columns: 1fr; } }
+@media (max-width: 36rem) {
+  .masthead .wrap { gap: 0.65rem 0.75rem; }
+  .masthead .nameplate { font-size: 1.3rem; }
+  .masthead .btn.small { padding: 0.65rem 0.7rem; font-size: 0.875rem; }
+  .agency-hero h1 { font-size: clamp(2.5rem, 9vw, 3.2rem); }
 }
-@media (max-width: 60rem) { .lead { grid-template-columns: 1fr; } }
 
 /* Ruled index (decisions, guides, articles) */
 .index h2, .index h3.label, .label { font: 700 0.875rem/1.2 var(--sans); letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue); margin: 0; padding-bottom: 0.7rem; border-bottom: 1px solid var(--ink); }
@@ -224,16 +256,10 @@ img, svg { max-width: 100%; }
   body { font-size: 10.5pt; }
 }
 
-/* Figures and image placeholders */
+/* Optional approved imagery */
 .figure { margin: 0; }
-.figure img, .figure .placeholder { display: block; width: 100%; height: auto; object-fit: cover; background: var(--tint); }
-.figure .placeholder { border: 1px dashed var(--rule); display: grid; place-items: center; text-align: center; color: var(--muted); font-size: 0.9375rem; line-height: 1.4; padding: 1rem; }
-.figure .placeholder strong { display: block; font: 700 0.875rem/1.2 var(--sans); letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.35rem; }
-.figure .placeholder small { display: block; font-size: 0.875rem; margin-top: 0.2rem; }
+.figure img { display: block; width: 100%; height: auto; object-fit: cover; background: var(--tint); }
 .figure figcaption { font-size: 0.9375rem; color: var(--muted); padding-top: 0.6rem; }
-.feature-figure { padding-bottom: clamp(3rem, 6vw, 5rem); }
-.pagehead.with-figure { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
 .split { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
 .post .figure { margin: 1.8rem 0 2.2rem; }
-@media (max-width: 60rem) { .pagehead.with-figure, .split { grid-template-columns: 1fr; } .split .figure { max-width: 20rem; } }
-@media print { .figure:has(.placeholder) { display: none; } }
+@media (max-width: 60rem) { .split { grid-template-columns: 1fr; } .split .figure { max-width: 20rem; } }

@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import Figure from '../components/Figure.astro';
 import ItemList from '../components/ItemList.astro';
 import { topics } from '../lib/topics';
 import { itemsForTopic } from '../lib/content';
@@ -15,13 +14,10 @@ const thin = items.filter((i) => i.live).length === 0;
 ---
 <Base title={`${t.title} | Medical Rank`} description={t.decision + ' Guides and questions for US medical practices.'} noindex={thin}>
   <div class="wrap">
-    <header class="pagehead with-figure">
-      <div>
+    <header class="pagehead">
         <h1>{t.title}</h1>
         <p class="lede">{t.decision}</p>
         <p>{t.intro}</p>
-      </div>
-      <Figure ratio="3 / 2" label={`Photograph or illustration for ${t.nav}`} size="1200 × 800 px" />
     </header>
     <section class="index wide open" style="padding-bottom:3rem">
       <h2>Guides and articles</h2>

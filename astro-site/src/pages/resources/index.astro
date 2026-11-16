@@ -1,0 +1,51 @@
+---
+import Base from '../../layouts/Base.astro';
+import ItemList from '../../components/ItemList.astro';
+import { allItems } from '../../lib/content';
+import { topics } from '../../lib/topics';
+
+const items = (await allItems()).filter((item) => item.live);
+const featured = items.slice(0, 3);
+---
+<Base title="Marketing Resources for Medical Practice Owners | Medical Rank" description="Practical guides, articles and worksheets on local SEO, Google Ads and marketing measurement for US medical practice owners and decision makers.">
+  <div class="wrap">
+    <header class="pagehead">
+      <h1>Resources for medical practice owners.</h1>
+      <p class="lede">Practical guidance for understanding your local search presence, Google Ads and marketing reports.</p>
+      <p>Medical Rank is an agency offering <a href="/services/local-seo/">local SEO</a> and <a href="/services/google-ads/">Google Ads</a>. These resources help you ask clearer questions and make a useful next decision, whether you work with us or manage the work another way.</p>
+    </header>
+    <section class="index wide" style="padding-bottom:3rem">
+      <h2>Start here</h2>
+      <ItemList items={featured} empty="Our first resources are being prepared." />
+    </section>
+  </div>
+
+  <section class="section">
+    <div class="wrap cols">
+      <div class="index">
+        <h2>Browse by topic</h2>
+        <ul>
+          {topics.map((topic) => (
+            <li><a href={`/${topic.slug}/`}><strong>{topic.title}</strong>{topic.decision}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div class="index">
+        <h2>Browse by format</h2>
+        <ul>
+          <li><a href="/guides/"><strong>Guides</strong>Sourced, hand-checked work on a specific marketing decision, with printable worksheets where useful.</a></li>
+          <li><a href="/blog/"><strong>Articles</strong>Shorter pieces covering common questions about medical practice marketing.</a></li>
+          <li><a href="/methodology/"><strong>How we research and write</strong>Our approach to sources, evidence, corrections and the limits of each content format.</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Want help with the work?</h2>
+      <p class="intro">Tell us about your practice and what you want to improve. We can discuss where Medical Rank could help with local SEO or Google Ads.</p>
+      <a class="btn" href="/contact/">Talk about your practice</a>
+    </div>
+  </section>
+</Base>

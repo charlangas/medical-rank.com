@@ -1,102 +1,138 @@
 ---
 import Base from '../layouts/Base.astro';
-import Figure from '../components/Figure.astro';
 import ItemList from '../components/ItemList.astro';
-import { topics } from '../lib/topics';
-import { allItems, guides, longDate, ymd } from '../lib/content';
-import { isLive } from '../lib/release';
-import { authors } from '../lib/authors';
+import { allItems } from '../lib/content';
 
-// The lead is the most recently published guide. Everything else published follows in the ruled list.
-const live = (await guides()).filter((g) => isLive(g.data.internal.status))
-  .sort((a, b) => (b.data.published?.getTime() ?? 0) - (a.data.published?.getTime() ?? 0));
-const lead = live[0];
-const leadUrl = lead && `/guides/${lead.data.slug}/`;
-const more = (await allItems()).filter((i) => i.live && i.url !== leadUrl).slice(0, 6);
-const leadTopic = lead && topics.find((t) => t.slug === lead.data.topic);
+// Resources support the agency offer. Published content never changes the homepage's main message.
+const resources = (await allItems()).filter((item) => item.live).slice(0, 2);
 const jsonLd = {
-  '@context': 'https://schema.org', '@type': 'Organization', name: 'Medical Rank', url: 'https://medical-rank.com/',
-  email: 'info@medical-rank.com', founder: { '@type': 'Person', name: 'Carlos Ochoa' },
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Medical Rank',
+  url: 'https://medical-rank.com/',
+  description: 'Local SEO and Google Ads for medical practices in the United States.',
+  email: 'info@medical-rank.com',
+  founder: { '@type': 'Person', name: 'Carlos Ochoa' },
+  areaServed: { '@type': 'Country', name: 'United States' },
 };
 ---
-<Base title="Medical Rank | Marketing guidance for medical practices" description="Independent guides that help US doctors and practice owners judge their SEO, Google Ads, website and agency, and decide what to do next." jsonLd={jsonLd}>
-  <div class="wrap">
-    <h1 class="strap"><strong>Marketing guidance for US medical practices,</strong> written for your side of the table.</h1>
-    <div class="lead">
-      {lead && (
-        <section aria-label="Featured guide">
-          <h2><a href={leadUrl}>{lead.data.title.split('?')[0] + (lead.data.title.includes('?') ? '?' : '')}</a></h2>
-          <p class="lede">{lead.data.summary}</p>
-          {lead.data.shortAnswer && <p class="answer"><strong>Short answer</strong>{lead.data.shortAnswer.split('. ').slice(0, 3).join('. ') + '.'}</p>}
-          <div class="actions">
-            <a class="btn" href={leadUrl}>Read the guide</a>
-            {lead.data.worksheet && <a class="btn quiet" href={`/worksheets/${lead.data.worksheet}/`}>Open the worksheet</a>}
-          </div>
-          <p class="meta">Guide{leadTopic && <> · <a href={`/${leadTopic.slug}/`}>{leadTopic.nav}</a></>} · By {authors[lead.data.author]?.name}{lead.data.published && <> · <time datetime={ymd(lead.data.published)}>{longDate(lead.data.published)}</time></>}</p>
-        </section>
-      )}
-      <aside class="index" aria-labelledby="decisions">
-        <h2 id="decisions">Decisions we help with</h2>
-        <ul>
-          {topics.map((t) => (
-            <li><a href={`/${t.slug}/`}><strong>{t.nav === 'Websites' ? 'Your website' : t.nav === 'Measurement' ? 'Budgets and agencies' : t.nav}</strong>{t.decision}</a></li>
-          ))}
-        </ul>
-      </aside>
+<Base title="Local SEO & Google Ads for Medical Practices | Medical Rank" description="Medical Rank offers local SEO and Google Ads for US medical practices. Discuss your practice's visibility, campaigns and next steps with us." jsonLd={jsonLd} bodyClass="agency-home">
+  <section class="agency-hero" aria-labelledby="agency-heading">
+    <div class="wrap">
+      <p class="agency-context">A marketing agency for US medical practices</p>
+      <h1 id="agency-heading">Local SEO and Google Ads for medical practices.</h1>
+      <p class="lede">Medical Rank helps US medical practices get found by patients searching for care. We manage your local search presence and Google Ads campaigns, with a clear plan for the work and reporting you can understand.</p>
+      <div class="actions">
+        <a class="btn" href="/contact/">Talk about your practice</a>
+        <a class="agency-secondary" href="#services">Explore our services</a>
+      </div>
+      <p class="agency-reassurance">Our first conversation is about where to start and whether we can help. No obligation.</p>
     </div>
-  </div>
+  </section>
 
-  <div class="wrap feature-figure">
-    <Figure ratio="21 / 9" label="Wide photograph for the front page, for example a practice front desk or a clinician at a computer" size="2400 × 1030 px" />
-  </div>
+  <section class="section" id="services" aria-labelledby="services-heading">
+    <div class="wrap">
+      <h2 id="services-heading">Help patients find your practice.</h2>
+      <p class="intro">Local SEO and Google Ads for independent physicians, specialty clinics and small practice groups in the United States.</p>
+      <div class="agency-services">
+        <article class="agency-service">
+          <p class="agency-service-name">Local SEO</p>
+          <h3>Build your presence in local search.</h3>
+          <p>We work on your Google Business Profile, local listings and practice website so nearby patients can find accurate information about your services and how to contact you.</p>
+          <ul class="plain">
+            <li>Google Business Profile improvements</li>
+            <li>Local listing accuracy and consistency</li>
+            <li>Relevant service pages on your website</li>
+          </ul>
+          <a href="/services/local-seo/">Explore local SEO <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="agency-service">
+          <p class="agency-service-name">Google Ads</p>
+          <h3>Reach patients searching for care.</h3>
+          <p>We manage search campaigns around your services and locations, from campaign structure and ad copy to the pages patients reach after clicking.</p>
+          <ul class="plain">
+            <li>Campaign setup and ongoing management</li>
+            <li>Search terms, targeting and ad copy</li>
+            <li>Landing pages and enquiry reporting</li>
+          </ul>
+          <a href="/services/google-ads/">Explore Google Ads <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  {more.length > 0 && (
-    <section class="section">
-      <div class="wrap index wide">
-        <h2>More to read</h2>
-        <ItemList items={more} />
-        <p style="margin:1.6rem 0 0"><a href="/guides/">All guides</a> · <a href="/blog/">All articles</a></p>
+  <section class="section agency-start" aria-labelledby="starting-point-heading">
+    <div class="wrap agency-prompt">
+      <div>
+        <h2 id="starting-point-heading">Not sure where to start?</h2>
+        <p>Tell us what you want to improve and how patients find you today. We will look at your Google listing, website and any ads you run, then discuss where we would begin and what needs a closer look.</p>
+      </div>
+      <a class="btn" href="/contact/">Talk about your practice</a>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="working-together-heading">
+    <div class="wrap">
+      <h2 id="working-together-heading">Know what we are working on, and why.</h2>
+      <ol class="agency-process">
+        <li>
+          <h3>Understand your practice</h3>
+          <p>We discuss your services, locations, priorities and current marketing. The starting point is the practice you actually run.</p>
+        </li>
+        <li>
+          <h3>Agree on the work</h3>
+          <p>We define the scope, priorities and what we will use to assess progress before the engagement begins.</p>
+        </li>
+        <li>
+          <h3>Manage and review</h3>
+          <p>We carry out the agreed work and explain what changed, what your reports show and what we recommend next.</p>
+        </li>
+      </ol>
+      <p class="agency-founder">Medical Rank is run by Carlos Ochoa. <a href="/about/">About Medical Rank</a></p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="buying-questions-heading">
+    <div class="wrap">
+      <h2 id="buying-questions-heading">Before we work together.</h2>
+      <div class="faq">
+        <details>
+          <summary>Do I need local SEO, Google Ads or both?</summary>
+          <p>That depends on your practice and the work needed. Tell us about your current marketing and what you want to improve. We will discuss the priority before you choose a service.</p>
+        </details>
+        <details>
+          <summary>What affects the cost?</summary>
+          <p>Your services, locations and existing setup shape the scope. We discuss the work needed before proposing an engagement. For Google Ads, consider both the agency's management fee and the advertising spend paid to Google.</p>
+        </details>
+        <details>
+          <summary>How will we know what is working?</summary>
+          <p>We explain what your reports count and what the available evidence supports. Clicks, calls, appointment requests and bookings are different measures. We make those distinctions clear when reviewing progress.</p>
+        </details>
+        <details>
+          <summary>Do you guarantee a ranking or number of patients?</summary>
+          <p>No. We agree on the work, explain how it will be assessed and discuss what the evidence shows as it becomes available.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  {resources.length > 0 && (
+    <section class="section agency-resources" id="resources" aria-labelledby="resources-heading">
+      <div class="wrap">
+        <h2 id="resources-heading">Practical guidance for practice owners.</h2>
+        <p class="intro">A closer look at the decisions behind your marketing.</p>
+        <div class="index wide"><ItemList items={resources} /></div>
+        <p class="agency-link"><a href="/resources/">Browse resources <span aria-hidden="true">→</span></a></p>
       </div>
     </section>
   )}
 
-  <section class="section band">
+  <section class="section band agency-contact" aria-labelledby="contact-heading">
     <div class="wrap">
-      <h2>How we work</h2>
-      <p class="intro">Medical Rank publishes guidance and also takes on clients. These are the rules we hold both to.</p>
-      <ul class="tenets">
-        <li><h3>We don't promise rankings.</h3><p>Search results depend on many things nobody controls. We focus on work within a practice's reach, and on measuring what it produces.</p></li>
-        <li><h3>We name our sources.</h3><p>Guides cite the documents they rely on and the date we checked them, so you can check them too.</p></li>
-        <li><h3>We say where the evidence stops.</h3><p>If a report can't tell you something, we say so instead of estimating it.</p></li>
-      </ul>
-      <p style="margin:2.2rem 0 0"><a href="/methodology/">Read how we research and write</a></p>
-    </div>
-  </section>
-
-  <section class="section" id="work-with-us">
-    <div class="wrap">
-      <h2>Work with Medical Rank</h2>
-      <div class="split" style="margin-bottom:2.4rem"><p class="intro" style="margin:0">We help independent physicians, specialty clinics and small multi-location practices in the United States get found in local search, turn website visits into appointment requests, and see which marketing brings in patients.</p><Figure ratio="3 / 2" label="Photograph for the services section" size="1200 × 800 px" /></div>
-      <div class="cols">
-        <div>
-          <h3 class="label">What we do</h3>
-          <dl class="deflist">
-            <div><dt>Local search</dt><dd>Your Google Business Profile, listings and local search presence, so patients near you see accurate, complete information.</dd></div>
-            <div><dt>Website and landing pages</dt><dd>Pages that answer what a patient is looking for and make the next step, calling or requesting an appointment, easy.</dd></div>
-            <div><dt>Google Ads</dt><dd>Search advertising run with healthcare advertising policies in mind, and measured against appointment requests rather than clicks.</dd></div>
-          </dl>
-        </div>
-        <div>
-          <h3 class="label">What a first conversation covers</h3>
-          <ol class="steps">
-            <li><div><strong>How patients find you today</strong>We look at your Google listing, your website and any ads you run, with you.</div></li>
-            <li><div><strong>What is and isn't working</strong>You tell us where new patients come from and where you're unsure. We tell you what we see.</div></li>
-            <li><div><strong>Whether we're a fit</strong>If we can help, we outline where we would start. If we can't, we'll say so.</div></li>
-          </ol>
-        </div>
-      </div>
-      <p style="margin:2.4rem 0 0"><a class="btn" href="/contact/">Tell us about your practice</a></p>
-      <p class="note" style="margin-top:1.2rem">Medical Rank is run by Carlos Ochoa. <a href="/about/">About Medical Rank</a></p>
+      <h2 id="contact-heading">Let's talk about your practice.</h2>
+      <p class="intro">Tell us where your practice is based, what you want to improve and what you are doing today. We will discuss where Medical Rank could help with local SEO or Google Ads.</p>
+      <a class="btn inverse" href="/contact/">Talk about your practice</a>
+      <p class="agency-email">Or email <a href="mailto:info@medical-rank.com">info@medical-rank.com</a>.</p>
     </div>
   </section>
 </Base>

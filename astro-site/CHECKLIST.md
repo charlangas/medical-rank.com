@@ -32,7 +32,7 @@ You do every step here; nothing has been changed. Stop and ask for help at any s
 ## E. Verify (right after D)
 - [ ] `curl -sv https://medical-rank.com/ -o /dev/null 2>&1 | grep -iE "issuer|expire|verify"`: verifies; same for `www.medical-rank.com`. Also `http://` for both ends at `https://medical-rank.com/`.
 - [ ] `curl -sI "https://www.medical-rank.com/guides/x/?a=1&b=2"`: `301` and `location: https://medical-rank.com/guides/x/?a=1&b=2`.
-- [ ] `/`, the guide and the worksheet return 200; `/dental`, `/pricing`, `/physical-therapy/pod` return 404; `/sitemap-index.xml` lists the homepage and guide only; `/robots.txt` allows crawling; **no `x-robots-tag` on the production hostname** (`curl -sI https://medical-rank.com/ | grep -i x-robots` prints nothing); the worksheet has `noindex,follow`.
+- [ ] `/`, both `/services/` pages, `/resources/`, the guide and the worksheet return 200; `/dental`, `/pricing`, `/physical-therapy/pod` return 404. The sitemap includes every built indexable page (including both service pages and Resources) and excludes worksheets, empty noindex hubs and 404. `/robots.txt` allows crawling; **no `x-robots-tag` on the production hostname** (`curl -sI https://medical-rank.com/ | grep -i x-robots` prints nothing); the worksheet has `noindex,follow`. Run `npm run verify:production` for the full route checks.
 - [ ] Mail again (inbound to the alias and outbound). Search Console: the domain property still verifies; submit `https://medical-rank.com/sitemap-index.xml`.
 
 ## F. If anything fails: roll back to Netlify (minutes)

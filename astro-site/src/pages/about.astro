@@ -1,29 +1,32 @@
 ---
 import Base from '../layouts/Base.astro';
-import Figure from '../components/Figure.astro';
 import { authors } from '../lib/authors';
 const a = authors['carlos-ochoa'];
 ---
-<Base title="About Medical Rank" description="Medical Rank publishes marketing guidance for US medical practices and works with practices directly. Run by Carlos Ochoa.">
+<Base title="About Medical Rank" description="Medical Rank is an agency offering local SEO and Google Ads for US medical practices. Run by Carlos Ochoa.">
   <div class="wrap">
     <header class="pagehead">
       <h1>About Medical Rank</h1>
-      <p class="lede">Medical Rank helps US doctors, practice owners and practice managers make better marketing decisions.</p>
+      <p class="lede">Medical Rank is an agency offering local SEO and Google Ads for US medical practices.</p>
     </header>
-    <div class="split">
     <div class="prose">
-      <h2>What we publish</h2>
-      <p>We write about four decisions practices face: being found in local search, paying for Google Ads, turning website visits into appointments, and setting budgets and choosing agencies. Our <a href="/guides/">guides</a> are sourced and checked by hand. Our <a href="/blog/">articles</a> are shorter and cover the questions practices search for most.</p>
-      <h2>How we make money</h2>
-      <p>Medical Rank is also a small marketing firm. We work with practices on local search, websites and Google Ads. When a page mentions our services, it says so plainly, and the guidance is written to be useful whether or not you ever contact us.</p>
-      <h2>What we don't do</h2>
-      <p>We don't promise rankings, publish testimonials we can't verify, or accept payment to recommend a vendor.</p>
+      <h2>Who we work with</h2>
+      <p>We work with owners and decision makers at independent physician practices, specialty clinics and small practice groups in the United States. The starting point is your practice: its services, locations, priorities and current marketing.</p>
+      <h2>The work we do</h2>
+      <p>Our <a href="/services/local-seo/">local SEO work</a> covers the practice's Google Business Profile, local listings and relevant website pages. Our <a href="/services/google-ads/">Google Ads work</a> covers search campaigns, ad copy, landing pages and enquiry reporting. Website improvements and measurement support these two services.</p>
+      <h2>How an engagement begins</h2>
+      <p>We discuss what you want to improve, look at your current setup and decide whether we are a fit. Before the engagement begins, we agree on the work, priorities and how progress will be assessed.</p>
+      <h2>Clear reporting</h2>
+      <p>We explain what your reports count and what the evidence supports. A click, call or appointment request is different from a booked appointment. Where the available records do not connect them, we say so. We do not promise a particular ranking or number of new patients.</p>
       <h2>Who runs it</h2>
       <p>{a.bio}</p>
-      <h2>Contact</h2>
-      <p><a href="/contact/">Tell us about your practice</a>, or write to <a href="mailto:info@medical-rank.com">info@medical-rank.com</a>.</p>
-    </div>
-    <Figure ratio="4 / 5" label="Portrait of Carlos Ochoa" size="960 × 1200 px" caption="Carlos Ochoa" />
+      <h2>Resources for practice owners</h2>
+      <p>We also publish <a href="/resources/">guides, articles and worksheets</a> to help practices evaluate their marketing. Guides name their sources and are checked by hand. Our <a href="/methodology/">research and writing methodology</a> explains how the content is produced and how to raise a correction.</p>
+      <p>The resources are useful whether or not you hire us. Our agency work is the commercial interest behind this site, and we state it where it is relevant.</p>
+      <h2>Let's talk about your practice</h2>
+      <p>Tell us what you want to improve, where you are based and what you are doing today. The first conversation is about where to start and whether we can help. No obligation.</p>
+      <p><a class="btn" href="/contact/">Talk about your practice</a></p>
+      <p>Or write to <a href="mailto:info@medical-rank.com">info@medical-rank.com</a>.</p>
     </div>
   </div>
 </Base>

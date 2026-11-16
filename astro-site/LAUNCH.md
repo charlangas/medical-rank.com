@@ -1,6 +1,6 @@
 # Medical Rank launch handoff: Astro on Cloudflare Workers (static assets)
 
-Astro is the production codebase and Cloudflare is the production host. The Netlify deployment is untouched and stays the rollback target. This file is the handoff; `CUTOVER.md` is the runbook. **Production hostnames, DNS and nameservers are unchanged.**
+Astro is the release codebase and Cloudflare is the planned production host. As checked on 2026-11-16, the live domain still points to Netlify through Porkbun DNS and the production Worker has not been created. This file is the handoff; `CUTOVER.md` is the domain migration runbook.
 
 ## Release revision
 - Branch `release/astro-cloudflare` (local, not pushed). **Release revision `78dac0221948`** (full `78dac02219484b2ce63d23586fdd917d05b066b8`). Earlier preview build: `7d8292fbe3d6`. Docs-only commits do not change the build.
@@ -50,6 +50,7 @@ The legacy archive (about 33,000 files at the repo root), the hypothetical bench
 See `LEGACY-URLS.md`. All 25,224 old sitemap URLs map to a real 404 except `/` (same), `/index` and `/sitemap.xml` (301). A 231-URL probe of every family on the preview had no mismatches. No Search Console traffic or link data was available to me, so the retirement list is by rule, pending your exports.
 
 ## Redesign in the working tree (2026-11-15, uncommitted, not deployed)
+Historical snapshot below. The journal redesign was subsequently committed as `76dd2ee46`; the agency release described next replaces its homepage direction.
 Everything above describes release revision `78dac0221948`. The working tree now holds a full redesign that has **not** been committed, previewed on Cloudflare or released:
 - New shell and design ("Journal Front Page"): `src/layouts/Base.astro`, `src/styles/site.css`, self-hosted Literata and Atkinson Hyperlegible Next. `public/index.html` and `public/home.css` are removed; the homepage is `src/pages/index.astro`.
 - New pages: four topic hubs (`/medical-seo/`, `/google-ads/`, `/website-conversion/`, `/marketing-measurement/`), `/guides/`, `/blog/`, `/about/`, `/methodology/`, `/contact/`, `/privacy/`, `/specialties/`.
@@ -59,3 +60,13 @@ Everything above describes release revision `78dac0221948`. The working tree now
 - Checked locally: production and preview builds, `verify-dist` for both targets, worksheet print (1, 6 and 9 pages) and guide print (5 pages).
 - Image placeholders: `src/components/Figure.astro` holds room for images on the homepage (2), each topic hub, the about page and the guide. `verify-dist.mjs production` **fails while any placeholder remains**, so supply the images (or remove the slots) before a production release; preview builds allow them. Guides and articles take `image` and `imageAlt` in frontmatter.
 - Not done: the contact form's Worker endpoint (the page shows an email button until `PUBLIC_CONTACT_ENDPOINT` is set at build), specialty hub content, an approved author bio, and a new Cloudflare preview deploy. `CHECKLIST.md` section E still lists the old sitemap expectation ("homepage and guide only").
+
+## Agency homepage release (2026-11-16)
+
+- Branch: `codex/medical-rank-agency-homepage`. Homepage introduces local SEO and Google Ads for US medical practice owners and decision makers. Service enquiries are primary; the published guide is supporting material lower on the page.
+- New commercial routes: `/services/local-seo/` and `/services/google-ads/`. New editorial entry point: `/resources/`. Existing guide, worksheet, topic and article URLs are preserved.
+- Global navigation, About, contact copy and reading-page CTAs describe the agency. Product and design instructions use the same priority. Unavailable imagery is omitted, so no empty image slots ship.
+- Contact uses an email link with a suggested enquiry outline while `PUBLIC_CONTACT_ENDPOINT` is unset. No form delivery or mailbox-delivery claim has been made.
+- Validation: production build, strict release verification including both sitemap directions and local links/declared anchors; browser checks at desktop, 375px and 320px; FAQ keyboard expansion; service-to-contact navigation; Resources-to-guide-to-worksheet path; worksheet runtime anchor and three print controls.
+- Local Wrangler runtime caches are ignored and removed from version control. Release assets are built from `astro-site/`; the root legacy archive and local research outputs stay out of deployment.
+- Production migration prerequisites in `CUTOVER.md` still apply. The latest observed production DNS was Porkbun nameservers, Netlify apex A records, and `www CNAME medicalrank.netlify.app`. A production-domain release requires the hosting choice and applicable cutover steps.

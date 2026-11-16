@@ -32,7 +32,7 @@ Pick a quiet hour. At Porkbun replace the four nameservers with the two Cloudfla
 ## 5. Verification after cutover
 - TLS: `curl -sv https://medical-rank.com/ -o /dev/null 2>&1 | grep -iE "issuer|expire|verify"` and the same for `www.`; both must verify. Test `http://` for both ends at `https://medical-rank.com/`.
 - www redirect with path and query: `curl -sI "https://www.medical-rank.com/guides/x/?a=1&b=2"` must show `301` and `location: https://medical-rank.com/guides/x/?a=1&b=2`; repeat with `http://www…`.
-- Pages: `/`, guide, worksheet 200; `/sitemap-index.xml` lists homepage and guide only; `/robots.txt` allows crawling; worksheet has `noindex,follow`; **no `x-robots-tag` header on the production hostname**; canonicals are the apex.
+- Pages: `/`, both service pages, `/resources/`, guide and worksheet return 200. The sitemap lists all built indexable pages and excludes worksheets, empty noindex hubs and 404. `/robots.txt` allows crawling; worksheet has `noindex,follow`; **no `x-robots-tag` header on the production hostname**; canonicals are the apex. Run `npm run verify:production` for the full route checks.
 - Real 404 for `/dental`, `/pricing`, `/blog/x`.
 - Mail: send and receive a test at `info@medical-rank.com`; check SPF/DKIM pass in message headers; confirm Google Search Console still verifies the domain.
 - Then submit `https://medical-rank.com/sitemap-index.xml`.

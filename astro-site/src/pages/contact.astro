@@ -3,13 +3,13 @@ import Base from '../layouts/Base.astro';
 // The form posts to a Worker endpoint that emails the owner. Until that endpoint exists
 // (PUBLIC_CONTACT_ENDPOINT set at build), the page offers email only, so nothing on it is broken.
 const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT;
-const mail = 'mailto:info@medical-rank.com?subject=' + encodeURIComponent('About my practice');
+const mail = 'mailto:info@medical-rank.com?subject=' + encodeURIComponent('About my practice') + '&body=' + encodeURIComponent('Your name:\nPractice name:\nPractice website:\nYour role:\n\nWhat would you like to improve?\n\nPlease do not include patient information.');
 ---
-<Base title="Contact Medical Rank" description="Tell Medical Rank about your practice and what you are trying to decide. We reply to set up a conversation.">
+<Base title="Talk About Your Practice | Medical Rank" description="Discuss local SEO and Google Ads for your medical practice with Medical Rank. Tell us what you want to improve and we will reply to set up a conversation.">
   <div class="wrap">
     <header class="pagehead">
-      <h1>Tell us about your practice</h1>
-      <p class="lede">Send your practice name, your website and what you would like help with. We reply to set up a short conversation. No obligation.</p>
+      <h1>Talk about your practice.</h1>
+      <p class="lede">Tell us where your practice is based, what you want to improve and what you are doing today. We reply to set up a short conversation about local SEO or Google Ads. No obligation.</p>
     </header>
     <div class="cols" style="padding-bottom:2rem">
       <div>
@@ -25,7 +25,11 @@ const mail = 'mailto:info@medical-rank.com?subject=' + encodeURIComponent('About
             <p role="status" aria-live="polite"></p>
           </form>
         ) : (
-          <p><a class="btn" href={mail}>Email us about your practice</a></p>
+          <div class="prose">
+            <p>Include your name, practice name, website and role in marketing decisions. You can enquire before you know which service you need.</p>
+            <p>Please don't include patient information.</p>
+            <p><a class="btn" href={mail}>Email us about your practice</a></p>
+          </div>
         )}
         <p class="note" style="margin-top:1.6rem">Or write to <a href="mailto:info@medical-rank.com">info@medical-rank.com</a>. See our <a href="/privacy/">privacy page</a> for what we do with your message.</p>
       </div>
