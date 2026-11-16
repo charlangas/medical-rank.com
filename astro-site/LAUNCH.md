@@ -79,3 +79,11 @@ Everything above describes release revision `78dac0221948`. The working tree now
 - Rebuilt from the clean commit using `node scripts/release.mjs preview` (`npm ci`, strict build, preview hardening, verification, then deploy). Dependency audit reported no vulnerabilities.
 - Remote verification passed for the homepage, both service pages, Resources, contact, guide and worksheet (200); slash normalization (307); `/index` (301); and retired/missing URLs (404). Every checked preview response carries `X-Robots-Tag: noindex, nofollow`.
 - Documentation-only commits after this tag do not change the deployed site. Production is still the legacy Netlify site pending the hosting decision and domain cutover.
+
+## Cloudflare cutover preparation (2026-11-16)
+
+- Owner selected Cloudflare following the existing release plan.
+- Authenticated account access confirmed. No zone or Worker custom domain for `medical-rank.com` exists in the target account yet.
+- Registrar sign-in is required to obtain the complete authoritative DNS export. Public DNS queries alone cannot establish the full set of mail and verification records.
+- The guide's planned first production release date is 2026-11-16. If the actual cutover happens on another day, update that date and rebuild before the production-domain release.
+- Production DNS changes remain gated on the complete registrar export, a matching staged Cloudflare zone and the other prerequisites in `CUTOVER.md`.
