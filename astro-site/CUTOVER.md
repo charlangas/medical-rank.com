@@ -2,7 +2,7 @@
 
 **The owner authorized this Cloudflare migration on 2026-11-16; `CHECKLIST.md` is the ordered, tickable version.** Decisions: podcast route retired (404); Netlify deleted only after the rollback window; owner confirms the enquiry mailbox works; all existing mail records preserved unchanged.
 
-Current execution status is in `LAUNCH.md`. Full registrar export, exact staged zone, nameserver update, zone activation and Universal SSL are complete. Netlify still serves production; mailbox confirmation and locking Netlify publishing remain before the production custom domain.
+Current execution status is in `LAUNCH.md`. Full registrar export, exact staged zone, nameserver update, zone activation, Universal SSL, mailbox confirmation and Netlify publishing lock are complete. Netlify still serves production until the dated release and custom-domain cutover.
 
 ## Measured current state (2026-11-09, from outside; `dig`, `curl`)
 - Registrar and DNS host: Porkbun. Nameservers `fortaleza`, `maceio`, `salvador`, `curitiba` `.ns.porkbun.com`. **No DNSSEC** (no DS record), so moving nameservers needs no DS change.

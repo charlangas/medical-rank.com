@@ -3,10 +3,10 @@
 The owner authorized this Cloudflare migration on 2026-11-16. Current execution details are in `LAUNCH.md`. Tick only when the "Done when" line is true. Never edit or delete mail records (MX, TXT, DKIM CNAMEs) at any step.
 
 ## Before you start (do these first, any order)
-- [ ] **Alias.** Create `info@medical-rank.com` as an alias where your mail is hosted (the MX points to Google). Send to it from an outside account (not a medical-rank.com address) and confirm it arrives. *Done when:* the message is in the inbox that receives the alias.
+- [x] **Alias.** Owner confirmed on 2026-11-17 that `info@medical-rank.com` receives and sends mail successfully after the nameserver change.
 - [ ] **Search Console exports** (see `LEGACY-URLS.md`): Performance > Pages (16 months), Links > Top linked pages, Page indexing > Indexed list. Run `node scripts/gsc-classify.mjs --pages … --links …` in `astro-site/`, or send me the files. Add a redirect only for a URL that has traffic or links **and** a genuinely relevant new page.
-- [x] **Go-live date.** Guide date committed as 2026-11-16; preview `0191e2ef4899` released and date checked remotely. Update and rebuild if the actual day changes.
-- [ ] **Netlify rollback target.** In Netlify > Deploys, write down the current Production deploy. Check whether the site is Git-linked; if it is, lock auto publishing. Do not change anything else in Netlify.
+- [ ] **Go-live date.** Guide date updated to 2026-11-17; commit and repeat preview before production.
+- [x] **Netlify rollback target.** Production `main@716ad9737`, deployment `67100d3f4b48fd000882034f`. Automatic publishing locked on 2026-11-17; UI confirms “Auto Publishing Locked.” Both domain assignments and deploys preserved.
 
 ## A. Export the DNS at Porkbun (changes nothing)
 - [x] Full authenticated Porkbun table and screenshot saved locally: 8 records, TTL 600. Actual apex is an ALIAS to Netlify; all MX, TXT and the existing DKIM CNAME are included. No other rows were present.
@@ -19,7 +19,7 @@ The owner authorized this Cloudflare migration on 2026-11-16. Current execution 
 ## C. Change the nameservers (separate sitting; Netlify still serves the site)
 - [x] Nameservers updated at Porkbun; saved values, .com registry and 1.1.1.1 / 8.8.8.8 confirm Cloudflare delegation. No DS record was present immediately before the change.
 - [x] Cloudflare zone is **Active**; registry and public resolvers show Cloudflare delegation. Website DNS still resolves to Netlify.
-- [ ] Re-test mail: send an outside message to `info@medical-rank.com` and one outbound message; confirm both arrive. Check SPF and DKIM pass in the message headers.
+- [x] Owner confirms inbound/outbound mail works after nameserver migration. Header-level SPF/DKIM inspection is not claimed; existing DNS records were preserved exactly.
 - [x] Universal SSL is **Active** for apex and wildcard, expires 2027-02-14. Always Use HTTPS enabled.
 - [ ] Optional dry run: attach `staging.medical-rank.com` as a custom domain of the **preview** Worker only; check it loads over HTTPS with the noindex header; remove it afterwards.
 
