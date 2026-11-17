@@ -1,0 +1,91 @@
+---
+import '@fontsource-variable/literata/opsz.css';
+import '@fontsource-variable/atkinson-hyperlegible-next';
+import '../styles/site.css';
+import { liveSpecialties } from '../lib/content';
+
+const { title, description, draft = false, noindex = false, canonical: canon = true, bodyClass = '', jsonLd } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+const path = Astro.url.pathname;
+const here = (href: string) => (path === href || (href !== '/' && path.startsWith(href)) ? 'page' : undefined);
+const resourcePaths = ['/resources/', '/guides/', '/blog/', '/worksheets/', '/medical-seo/', '/google-ads/', '/website-conversion/', '/marketing-measurement/', '/methodology/', '/specialties/'];
+const inResources = resourcePaths.some((prefix) => path.startsWith(prefix));
+const hasSpecialties = (await liveSpecialties()).length > 0;
+const nav = [
+  { href: '/services/local-seo/', label: 'Local SEO' },
+  { href: '/services/google-ads/', label: 'Google Ads' },
+  { href: '/about/', label: 'About' },
+  { href: '/resources/', label: 'Resources' },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canon && <link rel="canonical" href={canonicalUrl} />}
+    {(draft || noindex) && <meta name="robots" content={draft ? 'noindex,nofollow' : 'noindex,follow'} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {canon && <meta property="og:url" content={canonicalUrl} />}
+    <meta name="theme-color" content="#0023b0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body class={bodyClass}>
+    <a class="skip" href="#main">Skip to content</a>
+    {draft && <div class="draft">DRAFT preview. Not published.</div>}
+    <header class="masthead">
+      <div class="wrap">
+        <a class="nameplate" href="/">Medical Rank</a>
+        <nav aria-label="Main">
+          <ul>
+            {nav.map((n) => <li><a href={n.href} aria-current={n.href === '/resources/' && inResources ? 'page' : here(n.href)}>{n.label}</a></li>)}
+          </ul>
+        </nav>
+        <a class="btn small" href="/contact/" aria-current={here('/contact/')}>Talk about your practice</a>
+      </div>
+    </header>
+    <slot name="nav" />
+    <main id="main"><slot /></main>
+    <footer class="footer">
+      <div class="wrap">
+        <div>
+          <a class="nameplate" href="/">Medical Rank</a>
+          <p>Local SEO and Google Ads for US medical practices. Run by Carlos Ochoa.</p>
+          <p><a href="mailto:info@medical-rank.com">info@medical-rank.com</a></p>
+        </div>
+        <div>
+          <h2>Services</h2>
+          <ul>
+            <li><a href="/services/local-seo/">Local SEO</a></li>
+            <li><a href="/services/google-ads/">Google Ads</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/resources/">All resources</a></li>
+            <li><a href="/guides/">Guides</a></li>
+            <li><a href="/blog/">Articles</a></li>
+            {hasSpecialties && <li><a href="/specialties/">Specialties</a></li>}
+          </ul>
+        </div>
+        <div>
+          <h2>Medical Rank</h2>
+          <ul>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/methodology/">How we research and write</a></li>
+            <li><a href="/contact/">Contact</a></li>
+            <li><a href="/privacy/">Privacy</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

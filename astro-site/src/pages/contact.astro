@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+// The form posts to a Worker endpoint that emails the owner. Until that endpoint exists
+// (PUBLIC_CONTACT_ENDPOINT set at build), the page offers email only, so nothing on it is broken.
+const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT;
+const mail = 'mailto:info@medical-rank.com?subject=' + encodeURIComponent('About my practice') + '&body=' + encodeURIComponent('Your name:\nPractice name:\nPractice website:\nYour role:\n\nWhat would you like to improve?\n\nPlease do not include patient information.');
+---
+<Base title="Talk About Your Practice | Medical Rank" description="Discuss local SEO and Google Ads for your medical practice with Medical Rank. Tell us what you want to improve and we will reply to set up a conversation.">
+  <div class="wrap">
+    <header class="pagehead">
+      <h1>Talk about your practice.</h1>
+      <p class="lede">Tell us where your practice is based, what you want to improve and what you are doing today. We reply to set up a short conversation about local SEO or Google Ads. No obligation.</p>
+    </header>
+    <div class="cols" style="padding-bottom:2rem">
+      <div>
+        {endpoint ? (
+          <form class="form" method="post" action={endpoint} data-contact>
+            <label>Your name<input name="name" autocomplete="name" required maxlength="120" /></label>
+            <label>Email<input name="email" type="email" autocomplete="email" required maxlength="200" /></label>
+            <label>Practice name<input name="practice" autocomplete="organization" required maxlength="200" /></label>
+            <label>Practice website <span class="hint">Optional</span><input name="website" type="url" inputmode="url" placeholder="https://" maxlength="300" /></label>
+            <label>What would you like help with?<span class="hint">Please don't include patient information.</span><textarea name="message" required maxlength="4000"></textarea></label>
+            <label class="hp" aria-hidden="true">Leave this empty<input name="company_fax" tabindex="-1" autocomplete="off" /></label>
+            <div><button class="btn" type="submit">Send message</button></div>
+            <p role="status" aria-live="polite"></p>
+          </form>
+        ) : (
+          <div class="prose">
+            <p>Include your name, practice name, website and role in marketing decisions. You can enquire before you know which service you need.</p>
+            <p>Please don't include patient information.</p>
+            <p><a class="btn" href={mail}>Email us about your practice</a></p>
+          </div>
+        )}
+        <p class="note" style="margin-top:1.6rem">Or write to <a href="mailto:info@medical-rank.com">info@medical-rank.com</a>. See our <a href="/privacy/">privacy page</a> for what we do with your message.</p>
+      </div>
+      <div>
+        <h2 class="label">What a first conversation covers</h2>
+        <ol class="steps">
+          <li><div><strong>How patients find you today</strong>We look at your Google listing, your website and any ads you run, with you.</div></li>
+          <li><div><strong>What is and isn't working</strong>You tell us where new patients come from and where you're unsure. We tell you what we see.</div></li>
+          <li><div><strong>Whether we're a fit</strong>If we can help, we outline where we would start. If we can't, we'll say so.</div></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  {endpoint && (
+    <script is:inline>
+      (function () {
+        var f = document.querySelector('[data-contact]'); if (!f) return;
+        var s = f.querySelector('[role=status]'), b = f.querySelector('button');
+        f.addEventListener('submit', function (e) {
+          e.preventDefault(); b.disabled = true; s.dataset.state = ''; s.textContent = 'Sending…';
+          fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
+            .then(function (r) { if (!r.ok) throw new Error(); f.reset(); s.dataset.state = 'ok'; s.textContent = 'Thank you. Your message was sent; we will reply by email.'; })
+            .catch(function () { s.dataset.state = 'error'; s.textContent = 'Your message was not sent. Please try again, or email info@medical-rank.com.'; })
+            .finally(function () { b.disabled = false; });
+        });
+      })();
+    </script>
+  )}
+</Base>

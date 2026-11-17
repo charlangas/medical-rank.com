@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import EvidenceNote from '../../components/EvidenceNote.astro';
+import Methodology from '../../components/Methodology.astro';
+import { inBuild, isLive } from '../../lib/release';
+import { authors } from '../../lib/authors';
+import Figure from '../../components/Figure.astro';
+import Closing from '../../components/Closing.astro';
+import { topicBySlug } from '../../lib/topics';
+
+// Publishing is opt-in: only status "published" posts are built, unless SHOW_DRAFTS=1 (dev / preview builds).
+export async function getStaticPaths() {
+  const all = await getCollection('posts');
+  return all
+    .filter((p) => inBuild(p.data.internal.status))
+    .map((p) => ({ params: { slug: p.data.slug }, props: { post: p } }));
+}
+const { post } = Astro.props;
+const d = post.data;
+const { Content } = await render(post);
+const draft = !isLive(d.internal.status);
+const author = authors[d.author];
+if (!author) throw new Error(`Unknown author "${d.author}"`);
+const fmt = (x) => x.toISOString().slice(0, 10);
+const topic = topicBySlug(d.topic);
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: d.title, description: d.summary,
+  author: { '@type': 'Person', name: author.name },
+  publisher: { '@type': 'Organization', name: 'Medical Rank', url: 'https://medical-rank.com/' },
+  ...(d.published ? { datePublished: fmt(d.published), dateModified: fmt(d.updated ?? d.published) } : {}),
+  mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
+};
+---
+<PostLayout title={`${d.title} | Medical Rank`} description={d.summary} draft={draft} jsonLd={jsonLd}>
+  <h1>{d.title}</h1>
+  <p class="byline">By {author.name}{d.published && <> · Published <time datetime={fmt(d.published)}>{fmt(d.published)}</time></>} · <a href="/guides/">Guide</a>{topic && <> in <a href={`/${topic.slug}/`}>{topic.nav}</a></>}</p>
+  <p class="summary">{d.summary}</p>
+  <Figure src={d.image} alt={d.imageAlt} ratio="16 / 9" label="Lead image for this guide" size="1600 × 900 px" />
+  {d.shortAnswer && <aside class="short"><strong>Short answer.</strong> {d.shortAnswer}</aside>}
+  {d.worksheet && <p class="cta"><a href={`/worksheets/${d.worksheet}/`}>Open the printable worksheet</a></p>}
+  <Content components={{ EvidenceNote, Methodology }} />
+  <Closing topic={topic?.nav} />
+  <aside class="author"><strong>About the author.</strong> {author.bio}</aside>
+  <h2>Sources</h2>
+  <ol class="sources">
+    {d.sources.map((s) => (
+      <li><a href={s.url} rel="noopener">{s.title}</a>, {s.publisher}. Checked {s.checked.toISOString().slice(0, 10)}.</li>
+    ))}
+  </ol>
+</PostLayout>

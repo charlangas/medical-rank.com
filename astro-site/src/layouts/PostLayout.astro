@@ -1,0 +1,10 @@
+---
+// Reading layout for guides, engine articles, worksheets and the 404 page: the site shell plus one measured column.
+import Base from './Base.astro';
+import '../styles/post.css';
+const { title, description, kind = 'article', draft = false, noindex = false, canonical = true, jsonLd } = Astro.props;
+---
+<Base title={title} description={description} draft={draft} noindex={noindex} canonical={canonical} bodyClass={kind} jsonLd={jsonLd}>
+  <slot name="nav" slot="nav" />
+  <div class="wrap"><article class="post"><slot /></article></div>
+</Base>

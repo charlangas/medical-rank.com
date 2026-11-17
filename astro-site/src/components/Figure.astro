@@ -1,0 +1,10 @@
+---
+// Optional approved imagery. Pages remain complete without an asset; never show an empty slot.
+const { src, alt = '', caption, ratio = '16 / 9', class: cls = '' } = Astro.props;
+---
+{src && (
+  <figure class:list={['figure', cls]}>
+    <img src={src} alt={alt} loading="lazy" decoding="async" style={`aspect-ratio:${ratio}`} />
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+)}

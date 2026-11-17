@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import ItemList from '../../components/ItemList.astro';
+import { allItems } from '../../lib/content';
+const items = (await allItems()).filter((i) => i.kind === 'guide');
+---
+<Base title="Guides for medical practices | Medical Rank" description="Sourced, hand-checked guides that help US medical practices make marketing decisions, with printable worksheets.">
+  <div class="wrap">
+    <header class="pagehead">
+      <h1>Guides</h1>
+      <p class="lede">Each guide answers one decision a practice has to make. Sources are named, limits are stated, and most come with a worksheet you can print.</p>
+    </header>
+    <section class="index wide"><h2>All guides</h2><ItemList items={items} /></section>
+  </div>
+</Base>

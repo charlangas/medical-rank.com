@@ -1,0 +1,33 @@
+---
+import { render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import Figure from '../../components/Figure.astro';
+import Closing from '../../components/Closing.astro';
+import { articles, longDate, ymd } from '../../lib/content';
+import { topicForKeywords } from '../../lib/topics';
+
+// Articles come from the SEO engine. Only non-draft articles whose pubDate has arrived are built.
+export async function getStaticPaths() {
+  return (await articles()).map((a) => ({ params: { slug: a.id }, props: { a } }));
+}
+const { a } = Astro.props;
+const d = a.data;
+const { Content } = await render(a);
+const topic = topicForKeywords([d.primaryKeyword, ...d.tags]);
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: d.title, description: d.description,
+  datePublished: ymd(d.pubDate), dateModified: ymd(d.pubDate),
+  author: { '@type': 'Organization', name: 'Medical Rank', url: 'https://medical-rank.com/about/' },
+  publisher: { '@type': 'Organization', name: 'Medical Rank', url: 'https://medical-rank.com/' },
+  mainEntityOfPage: url,
+};
+---
+<PostLayout title={`${d.title} | Medical Rank`} description={d.description} draft={d.draft} jsonLd={jsonLd}>
+  <h1>{d.title}</h1>
+  <p class="byline">By Medical Rank · Published <time datetime={ymd(d.pubDate)}>{longDate(d.pubDate)}</time> · <a href="/blog/">Article</a>{topic && <> in <a href={`/${topic.slug}/`}>{topic.nav}</a></>} · <a href="/methodology/">How our articles are written</a></p>
+  <p class="summary">{d.description}</p>
+  {d.image && <Figure src={d.image} alt={d.imageAlt} ratio="16 / 9" />}
+  <Content />
+  <Closing topic={topic?.nav} />
+</PostLayout>

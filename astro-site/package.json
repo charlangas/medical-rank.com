@@ -1,0 +1,32 @@
+{
+  "name": "medical-rank-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "SHOW_DRAFTS=1 astro dev --port 4331",
+    "check:content": "node scripts/check-content.mjs",
+    "build": "npm run check:content && astro build && node scripts/prune-sitemap.mjs",
+    "build:rc": "RELEASE_CANDIDATE=1 node scripts/check-content.mjs && RELEASE_CANDIDATE=1 astro build && node scripts/prune-sitemap.mjs",
+    "build:preview": "SHOW_DRAFTS=1 astro build && node scripts/prune-sitemap.mjs",
+    "preview": "astro preview --port 4322",
+    "build:host-preview": "npm run build && node scripts/preview-hardening.mjs",
+    "verify:production": "node scripts/verify-dist.mjs production",
+    "verify:preview": "node scripts/verify-dist.mjs preview",
+    "release:production": "node scripts/release.mjs production",
+    "release:preview": "node scripts/release.mjs preview"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.1.3",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/atkinson-hyperlegible-next": "^5.3.0",
+    "@fontsource-variable/literata": "^5.3.0",
+    "astro": "^7.4.7",
+    "js-yaml": "^5.5.0"
+  },
+  "devDependencies": {
+    "wrangler": "4.159.0"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

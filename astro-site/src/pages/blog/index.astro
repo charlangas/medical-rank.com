@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import ItemList from '../../components/ItemList.astro';
+import { allItems } from '../../lib/content';
+const items = (await allItems()).filter((i) => i.kind === 'article');
+---
+<Base title="Articles on medical practice marketing | Medical Rank" description="Articles on medical SEO, Google Ads, practice websites and marketing measurement for US medical practices." noindex={items.length === 0}>
+  <div class="wrap">
+    <header class="pagehead">
+      <h1>Articles</h1>
+      <p class="lede">Shorter pieces on the questions practices search for most. For our sourced, hand-checked work, see the <a href="/guides/">guides</a>.</p>
+    </header>
+    <section class="index wide"><h2>Latest</h2><ItemList items={items} empty="The first articles are on their way." /></section>
+  </div>
+</Base>

@@ -1,0 +1,18 @@
+---
+// Ruled list of guides and articles. No cards.
+import { longDate, ymd } from '../lib/content';
+const { items, empty = 'Nothing published here yet.' } = Astro.props;
+---
+{items.length === 0 ? <p class="empty">{empty}</p> : (
+  <ol>
+    {items.map((i) => (
+      <li>
+        <a href={i.url}>
+          <strong>{i.title}</strong>
+          <p>{i.summary}</p>
+          <span class="when">{i.kind === 'guide' ? 'Guide' : 'Article'}{i.topic && ` · ${i.topic.nav}`}{i.date && <> · <time datetime={ymd(i.date)}>{longDate(i.date)}</time></>}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+)}

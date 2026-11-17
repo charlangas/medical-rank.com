@@ -1,0 +1,14 @@
+---
+// Shared methodology block for benchmark-style posts. Props only: no per-post markup.
+const { sample, period, source, definitions = [], limits = [] } = Astro.props;
+---
+<section class="methodology" aria-label="Methodology">
+  <h2>Methodology</h2>
+  <dl>
+    <dt>Sample</dt><dd>{sample}</dd>
+    <dt>Period</dt><dd>{period}</dd>
+    <dt>Data source</dt><dd>{source}</dd>
+    {definitions.length > 0 && <><dt>Definitions</dt><dd><ul>{definitions.map((d) => <li>{d}</li>)}</ul></dd></>}
+    {limits.length > 0 && <><dt>Limits</dt><dd><ul>{limits.map((l) => <li>{l}</li>)}</ul></dd></>}
+  </dl>
+</section>

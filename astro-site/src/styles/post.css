@@ -1,0 +1,85 @@
+/* Reading column for guides, articles and worksheets. Tokens come from site.css. */
+.post{max-width:46rem;padding:clamp(1.8rem,4vw,3.2rem) 0 2rem;font:400 1.125rem/1.65 var(--serif)}
+.post h1{font-size:clamp(2.1rem,4.6vw,3.4rem);line-height:1.06;letter-spacing:-.02em;margin:0 0 1rem}
+.post h2{font-size:1.75rem;margin:2.8rem 0 .7rem;line-height:1.2}
+.post h3{font-size:1.3rem;margin:2rem 0 .5rem;line-height:1.25}
+.post p,.post ul,.post ol{margin:0 0 1.1rem;max-width:36rem}
+.post li{margin-bottom:.4rem}
+.post blockquote{margin:1.4rem 0;padding:.2rem 0 .2rem 1.2rem;border-left:1px solid var(--rule);color:var(--muted)}
+.post .faq{border-top:1px solid var(--ink);margin-top:3rem}
+.post .faq details{border-bottom:1px solid var(--line);padding:.9rem 0}
+.post .faq summary{font-size:1.25rem;cursor:pointer}
+.post .faq p{margin:.7rem 0 0}
+.closing{background:var(--tint);border-top:3px solid var(--blue);padding:1.5rem 1.6rem 1.7rem;margin:3rem 0 1rem;font:400 1.0625rem/1.5 var(--sans)}
+.closing h2{font-size:1.6rem;margin:0 0 .5rem}
+.closing p{margin:0 0 1.1rem;color:var(--muted)}
+table{border-collapse:collapse;width:100%;margin:1.2rem 0;font:400 .9375rem/1.4 var(--sans)}
+th,td{border:1px solid var(--line);padding:.45rem .55rem;text-align:left;vertical-align:top}
+th{background:var(--soft)}
+.table-wrap{overflow-x:auto}
+.summary{color:var(--muted);font:400 1.3rem/1.45 var(--sans)}
+.short{background:var(--soft);border-top:3px solid var(--accent);padding:1.2rem 1.4rem 1.3rem;margin:1.6rem 0;font:400 1.125rem/1.5 var(--sans)}
+.evnote{font:13px/1.4 var(--sans);color:var(--muted);margin:-.4rem 0 1rem}
+.cta a{font:600 15px var(--sans)}
+.methodology{background:var(--soft);border:1px solid var(--line);padding:.2rem 1rem 1rem;margin:2rem 0;font:15px/1.5 var(--sans)}
+.methodology dt{font-weight:700;margin-top:.7rem}
+.methodology dd{margin:.1rem 0 0}
+.sources{font:14px/1.5 var(--sans)}
+.jump{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:.5rem 16px;font:14px var(--sans);display:flex;flex-wrap:wrap;gap:.4rem .9rem;z-index:2}
+.jump span{color:var(--muted)}
+.worksheet{font-family:var(--sans);font-size:16px}
+
+.printbar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.75rem 0 1rem;font:14px/1.4 var(--sans)}
+.printbar button{font:600 14px var(--sans);padding:.55rem .85rem;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:0;cursor:pointer}
+.printbar button:not(:first-of-type){background:#fff;color:var(--accent)}
+.printbar span{color:var(--muted);flex-basis:100%}
+@media (max-width:640px){.printbar span{display:none}.printbar button{flex:1 1 45%;padding:.5rem .4rem}}
+.print-note-quick{display:none}
+@media (max-width:640px){
+ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:14px}
+}
+@media print{
+ @page{margin:13mm 13mm}
+ body{font-size:10.5pt;line-height:1.4}
+ body.worksheet{font-size:9.1pt;line-height:1.28}
+ .methodology,.short,.evnote{break-inside:avoid}
+ p{margin:.45em 0}
+ h2{margin:0 0 .4em}
+ .jump,.draft,.cta,.printbar,.crumbs,.closing{display:none}
+ body[data-print=quick] [data-sec="4B"]{display:none}
+ body[data-print=start] .sec,body[data-print=start] .no-start{display:none}
+ .worksheet blockquote{break-inside:avoid}
+ body[data-print=quick] .print-note-quick{display:block;border:1px solid #888;padding:.5rem .7rem;margin:.6rem 0}
+ .worksheet .sec>h2{break-before:page}
+ .worksheet table{font-size:8.8pt}
+ .article table{break-inside:auto}
+ .article p:has(+ table){break-after:avoid}
+ .sec[data-sec="4B"] table{break-inside:auto}
+ thead{display:table-header-group}
+ .post{max-width:none;padding:0}.wrap{padding:0;max-width:none}
+ table{display:table;font-size:9.5pt;margin:.6rem 0;page-break-inside:avoid;break-inside:avoid}
+ tr,th,td{break-inside:avoid}
+ h1,h2,h3{break-after:avoid}
+ .sec p:has(+ table),.sec p:has(+ ul){break-after:avoid}
+ p:has(+ table) strong:only-child{break-after:avoid}
+ a{color:inherit;text-decoration:none}
+}
+#agency-msg{scroll-margin-top:7rem}
+.byline{color:var(--muted);font:14px/1.4 var(--sans);margin:.25rem 0 .75rem}
+.author{border-top:1px solid var(--line);margin-top:2rem;padding-top:.75rem;font:15px/1.5 var(--sans)}
+.worksheet .post{font:400 1rem/1.5 var(--sans)}
+.worksheet .post p,.worksheet .post ul,.worksheet .post ol,.post .short,.post .summary{max-width:none}
+.byline a{color:inherit}
+@media print{.post{font-size:inherit;line-height:inherit}.worksheet .post{font-size:inherit;line-height:inherit}}
+/* Print keeps the original compact metrics so the worksheet page counts (1, 6 and 9 pages) hold. */
+@media print{
+ .post h1{font-size:1.9rem;line-height:1.2;margin:1.2rem 0 .6rem;letter-spacing:0}
+ .post h2{font-size:1.35rem;line-height:1.25;margin:0 0 .4em}
+ .post h3{font-size:1.1rem;margin:1.6rem 0 .4rem}
+ .post p,.post ul,.post ol{margin:.45em 0;max-width:none}
+ .post li{margin-bottom:0}
+ .worksheet,.worksheet .post,.worksheet .post h1,.worksheet .post h2,.worksheet .post h3,.worksheet table{font-family:system-ui,sans-serif}
+ .worksheet .post h1,.worksheet .post h2,.worksheet .post h3{font-weight:700}
+ .article .post,.article .post h1,.article .post h2,.article .post h3{font-family:Georgia,"Times New Roman",serif}
+ .article .post h1,.article .post h2,.article .post h3{font-weight:700}
+}

@@ -1,0 +1,11 @@
+---
+import { getCollection } from 'astro:content';
+// Looks the source up from the current page's own frontmatter (slug is taken from the URL).
+const { source } = Astro.props;
+const slug = Astro.url.pathname.split('/').filter(Boolean).pop();
+const post = (await getCollection('posts')).find((p) => p.data.slug === slug);
+const s = post?.data.sources.find((x) => x.id === source);
+if (!s) throw new Error(`EvidenceNote: source "${source}" not found for "${slug}"`);
+const checked = s.checked.toISOString().slice(0, 10);
+---
+<p class="evnote">Source: <a href={s.url} rel="noopener">{s.title}</a>, {s.publisher}, checked {checked}.</p>

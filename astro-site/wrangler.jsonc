@@ -1,0 +1,12 @@
+// PRODUCTION Worker (static assets only). The apex custom domain is managed here.
+// workers.dev and version URLs remain off; www redirects through a zone Redirect Rule.
+{
+  "name": "medical-rank",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "medical-rank.com", "custom_domain": true, "zone_id": "64b1b5f76fd3a28920b2df26038f0b97" }
+  ],
+  "assets": { "directory": "./dist", "not_found_handling": "404-page", "html_handling": "auto-trailing-slash" }
+}
