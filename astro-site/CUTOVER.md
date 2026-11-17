@@ -1,8 +1,8 @@
 # Cutover and rollback runbook: Netlify to Cloudflare Workers
 
-**You perform the Cloudflare and Porkbun steps; `CHECKLIST.md` is the ordered, tickable version of this runbook.** Decisions 2026-11-10: podcast route retired (404); Netlify site is deleted only after the rollback window; `info@medical-rank.com` alias created and tested by you; all existing mail records preserved unchanged.
+**The owner authorized this Cloudflare migration on 2026-11-16; `CHECKLIST.md` is the ordered, tickable version.** Decisions: podcast route retired (404); Netlify deleted only after the rollback window; owner confirms the enquiry mailbox works; all existing mail records preserved unchanged.
 
-Nothing here has been run. Stop points: nameservers, DNS records and the production custom domain are untouched. Netlify keeps serving production until the final step.
+Current execution status is in `LAUNCH.md`. Full registrar export, exact staged zone, nameserver update, zone activation and Universal SSL are complete. Netlify still serves production; mailbox confirmation and locking Netlify publishing remain before the production custom domain.
 
 ## Measured current state (2026-11-09, from outside; `dig`, `curl`)
 - Registrar and DNS host: Porkbun. Nameservers `fortaleza`, `maceio`, `salvador`, `curitiba` `.ns.porkbun.com`. **No DNSSEC** (no DS record), so moving nameservers needs no DS change.
@@ -15,7 +15,7 @@ Nothing here has been run. Stop points: nameservers, DNS records and the product
 
 ## 2. Stage the zone on Cloudflare (no traffic change)
 1. In Cloudflare add `medical-rank.com` as a zone (full setup) in the account that holds the Worker. Free plan is enough for this.
-2. Recreate every record from step 1 exactly, with apex A and `www` pointing at Netlify as **DNS-only (grey cloud)**. Mail records are always DNS-only. Turn proxying off on everything for now.
+2. Recreate every record from step 1 exactly, with apex and `www` pointing at Netlify as **DNS-only (grey cloud)**. The authenticated export showed an apex ALIAS to `apex-loadbalancer.netlify.com`; represent it as an apex CNAME to that target using Cloudflare's automatic apex flattening. The two public A records are resolved ALIAS answers. Mail records are always DNS-only. Turn proxying off on everything for now.
 3. Diff the Cloudflare record list against the Porkbun export, line by line. Have a second person check the mail records.
 4. Cloudflare will show the two assigned nameservers. Do **not** change them yet.
 5. Optional end-to-end test of Cloudflare's custom domain, TLS and redirect machinery without touching production hostnames: after step 7 below, attach `staging.medical-rank.com` as a custom domain of the **preview** Worker `medical-rank-preview` (noindex build). Delete it afterwards.
@@ -23,9 +23,9 @@ Nothing here has been run. Stop points: nameservers, DNS records and the product
 ## 3. Nameserver change (separate step, still serving Netlify)
 Pick a quiet hour. At Porkbun replace the four nameservers with the two Cloudflare gave you. Traffic keeps reaching Netlify because the staged records point there. Old NS TTL is 86400, so propagation can take up to 48 hours. Verify while waiting: `dig NS medical-rank.com`, `dig MX medical-rank.com +short`, `dig TXT medical-rank.com +short` against both the old and the new nameservers; the site and mail must work exactly as before; send and receive a test at `info@medical-rank.com`. Proceed only when Cloudflare shows the zone **Active** and **Universal SSL is active** (SSL/TLS > Edge Certificates; whether it issues before proxying is on, confirm in the dashboard).
 
-## 4. Production release and cutover (do not start without sign-off)
+## 4. Production release and cutover (authorized; wait for step 3 prerequisites)
 1. Commit the go-live date; `npm run release:preview`, retest; then `npm run release:production` (creates Worker `medical-rank` with no domain and workers.dev off). Record the deployment ID and commit.
-2. Add the Worker's custom domain for `medical-rank.com`. Add `routes: [{ "pattern": "medical-rank.com", "custom_domain": true }]` to `wrangler.jsonc` and commit it, so the config stays the source of truth (Cloudflare docs: a custom domain cannot be created on a hostname with a CNAME; remove the two apex A records if Cloudflare prompts).
+2. Add the Worker's custom domain for `medical-rank.com`. Add `routes: [{ "pattern": "medical-rank.com", "custom_domain": true }]` to `wrangler.jsonc` and commit it, so config stays the source of truth. Cloudflare cannot create a custom domain on a hostname with a CNAME: replace only the staged apex CNAME to Netlify when attaching the Worker; preserve every mail and verification record.
 3. For `www`: delete the CNAME to Netlify, create a **proxied** placeholder record (`A 192.0.2.0` or `AAAA 100::`, per Cloudflare docs) and a Redirect Rule: when hostname equals `www.medical-rank.com`, dynamic redirect to `concat("https://medical-rank.com", http.request.uri.path)`, status **301**, **preserve query string**. A Redirect Rule is zone-level because `_redirects` cannot match hostnames.
 4. Keep `medical-rank.com` and `www` assigned in Netlify and leave its deploys alone.
 
@@ -39,7 +39,7 @@ Pick a quiet hour. At Porkbun replace the four nameservers with the two Cloudfla
 
 ## 6. Rollback to Netlify
 Save the Cloudflare DNS list and the Porkbun export before step 4.
-- **Fast (minutes), while Netlify still has both domains:** in Cloudflare DNS remove the Worker custom domain from the apex, re-create `A 75.2.60.5` and `A 99.83.231.61` and `www CNAME medicalrank.netlify.app` (all DNS-only), disable the Redirect Rule. Re-run the step 5 checks against the old site. Mail records are never touched.
+- **Fast (minutes), while Netlify still has both domains:** remove the Worker's apex custom-domain binding, restore apex `CNAME apex-loadbalancer.netlify.com` (automatically flattened) and `www CNAME medicalrank.netlify.app`, both DNS-only, and disable the Redirect Rule. Re-run step 5 against the old site. Equivalent measured apex A answers were `75.2.60.5` and `99.83.231.61`. Mail records are never touched.
 - **Content-only** (Worker is live but a release is bad): `wrangler rollback` or Dashboard > Worker > Deployments > Rollback restores a previous Worker version across all routes. This needs a previous version, so it does not apply to the very first production release.
 - **Full (slow):** restore the four Porkbun nameservers. Up to 48 hours; use only if Cloudflare DNS itself fails.
 - **Certificate caveat:** Netlify's certificates expire 2026-12-20. Once DNS points at Cloudflare, Netlify may not be able to renew them, so a rollback after about mid-December could land on an expired or about-to-expire certificate. **Close the rollback window by 2026-12-01**, or re-provision the Netlify certificates first if you plan to stay longer. HSTS is set on the live site, so an invalid certificate would block visitors entirely.
