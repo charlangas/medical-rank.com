@@ -9,9 +9,9 @@ The owner approved the agency homepage and selected Cloudflare, following `CUTOV
 - All 8 records imported **DNS-only, TTL 600**. Scripted comparison and independent review passed: no missing or extra records; MX priorities, SPF, verification TXT and existing DKIM hostname unchanged.
 - The registrar's apex is an **ALIAS to `apex-loadbalancer.netlify.com`**, not two literal A records. Staged as an apex CNAME to the same target using Cloudflare's automatic apex flattening. Direct queries to both Cloudflare nameservers match Porkbun for A, MX, TXT, DKIM CNAME and www CNAME.
 - Porkbun nameservers changed to **`dalary.ns.cloudflare.com` and `ray.ns.cloudflare.com`**. Saved registrar values, `.com` registry delegation, `1.1.1.1` and `8.8.8.8` confirm the update. No DS record existed immediately before the change.
-- Cloudflare zone is **Active** and Universal SSL is **Active** for `medical-rank.com` and `*.medical-rank.com` (expires 2027-02-14). Always Use HTTPS is enabled. Web records still point to Netlify. **No production Worker or custom domain is attached yet.**
+- Cloudflare zone is **Active** and Universal SSL is **Active** for `medical-rank.com` and `*.medical-rank.com` (expires 2027-02-14). Always Use HTTPS is enabled. Production Worker `medical-rank` is deployed at `10c02fd156e6`, version `f6568b8a-e599-4d5b-abad-07f256dac30e`, with no targets. The apex custom-domain configuration is now committed for cutover; web DNS still points to Netlify until deployment attaches it.
 - Owner confirmed on 2026-11-17 that `info@medical-rank.com` receives and sends mail successfully. `PUBLIC_CONTACT_ENDPOINT` is unset, so contact uses an email link.
-- Netlify automatic publishing is **locked** to rollback deployment `67100d3f4b48fd000882034f`. Owner prefers the existing SEO-engine service account for Search Console; property access is pending. Existing credentials match the requested account and are kept outside this repo.
+- Netlify automatic publishing is **locked** to rollback deployment `67100d3f4b48fd000882034f`. Owner's chosen SEO-engine service account can read the Search Console domain property; Google currently reports Restricted user, and the owner has been asked to change it to Full for sitemap submission. Existing credentials are outside this repo. The available 16-month page report contains 12 URLs and one click; local CSV and JSON backups are saved. Existing retirement rules remain in effect. Links and complete indexed-page exports are not available through the API used here.
 - The www redirect is prepared in the Cloudflare editor: exact hostname filter, dynamic HTTPS apex + original path, 301, query preserved. It is **not saved**. Automatic approval review rejected proceeding past Cloudflare's DNS-only warning. Cancelled that dialog; save/deploy the rule only after the planned proxied www record resolves the prerequisite. Do not retry the warning bypass.
 
 ## Agency site
@@ -26,7 +26,7 @@ The homepage presents **local SEO and Google Ads for US medical practice owners 
 ## Verified preview
 
 - **https://medical-rank-preview.carlos-e05.workers.dev**, Worker `medical-rank-preview`.
-- Revision/tag **`0191e2ef4899`**; Cloudflare version **`6d70c22f-2ead-4de3-ba79-192ce6b76f16`**, deployed 2026-11-16.
+- Revision/tag **`10c02fd156e6`**; Cloudflare version **`644bc2a2-9e5c-4732-80bc-171c9ad63ad4`**, deployed 2026-11-17.
 - Clean release: `npm ci`, build, preview hardening, strict verification, deploy. Dependency audit: zero vulnerabilities.
 - Deployed guide date checked remotely. Preview returns `X-Robots-Tag: noindex, nofollow` and disallow robots.txt.
 - Hosted checks passed for homepage, both services, Resources, contact, guide and worksheet (200), slash normalization (307), `/index` (301), and retired/missing URLs (404).

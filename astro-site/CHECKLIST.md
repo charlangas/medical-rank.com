@@ -5,7 +5,7 @@ The owner authorized this Cloudflare migration on 2026-11-16. Current execution 
 ## Before you start (do these first, any order)
 - [x] **Alias.** Owner confirmed on 2026-11-17 that `info@medical-rank.com` receives and sends mail successfully after the nameserver change.
 - [ ] **Search Console exports** (see `LEGACY-URLS.md`): Performance > Pages (16 months), Links > Top linked pages, Page indexing > Indexed list. Run `node scripts/gsc-classify.mjs --pages … --links …` in `astro-site/`, or send me the files. Add a redirect only for a URL that has traffic or links **and** a genuinely relevant new page.
-- [ ] **Go-live date.** Guide date updated to 2026-11-17; commit and repeat preview before production.
+- [x] **Go-live date.** 2026-11-17 committed and deployed to preview at `10c02fd156e6`; guide date, main routes and preview noindex checked remotely before production release.
 - [x] **Netlify rollback target.** Production `main@716ad9737`, deployment `67100d3f4b48fd000882034f`. Automatic publishing locked on 2026-11-17; UI confirms “Auto Publishing Locked.” Both domain assignments and deploys preserved.
 
 ## A. Export the DNS at Porkbun (changes nothing)
@@ -24,7 +24,7 @@ The owner authorized this Cloudflare migration on 2026-11-16. Current execution 
 - [ ] Optional dry run: attach `staging.medical-rank.com` as a custom domain of the **preview** Worker only; check it loads over HTTPS with the noindex header; remove it afterwards.
 
 ## D. Cut over (only after A to C are done and you have a quiet hour)
-- [ ] Ask me (or run yourself) the production release: `npm run release:production` from a clean commit. This creates Worker `medical-rank` (no domain, workers.dev off). Write down the deployment ID and commit.
+- [x] Production Worker `medical-rank` created without targets from `10c02fd156e6`, version `f6568b8a-e599-4d5b-abad-07f256dac30e`. Strict production verification passed; workers.dev and version URLs are off.
 - [ ] Add `medical-rank.com` as the Worker's custom domain (dashboard, or add `"routes": [{"pattern": "medical-rank.com", "custom_domain": true}]` to `wrangler.jsonc` and commit). Replace only the staged apex CNAME to Netlify; preserve mail and verification records.
 - [ ] `www`: delete the CNAME to Netlify; add a **proxied** placeholder `A 192.0.2.0` (or `AAAA 100::`); add a Redirect Rule: hostname equals `www.medical-rank.com` > dynamic redirect to `concat("https://medical-rank.com", http.request.uri.path)`, **301**, preserve query string.
 - [ ] Do **not** remove either domain from Netlify.
