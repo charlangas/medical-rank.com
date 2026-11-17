@@ -1,57 +1,54 @@
-# Medical Rank release: Astro on Cloudflare Workers
+# Medical Rank: production release
 
-The owner approved the agency homepage and selected Cloudflare, following `CUTOVER.md`, on 2026-11-16. Release branch: `codex/medical-rank-agency-homepage`. [PR #1](https://github.com/charlangas/medical-rank.com/pull/1) includes the Astro site and agency changes. The root legacy archive is not deployed to Cloudflare.
+**Live at https://medical-rank.com/ on Cloudflare Workers, 2026-11-17.** The owner approved the agency homepage and selected the existing Cloudflare cutover plan. [PR #1](https://github.com/charlangas/medical-rank.com/pull/1) contains the Astro site and agency changes; the root legacy archive is excluded from Worker assets.
 
-## Current cutover state (2026-11-17)
+## Production
 
-- Full authenticated Porkbun DNS table saved locally: **8 records**, TTLs and screenshot, under `research/cloudflare-cutover/`. Operational backups are not committed or deployed.
-- Cloudflare Free zone: `64b1b5f76fd3a28920b2df26038f0b97`, existing account `e0590b0eb502819bdd19ec5ca9533e71`.
-- All 8 records imported **DNS-only, TTL 600**. Scripted comparison and independent review passed: no missing or extra records; MX priorities, SPF, verification TXT and existing DKIM hostname unchanged.
-- The registrar's apex is an **ALIAS to `apex-loadbalancer.netlify.com`**, not two literal A records. Staged as an apex CNAME to the same target using Cloudflare's automatic apex flattening. Direct queries to both Cloudflare nameservers match Porkbun for A, MX, TXT, DKIM CNAME and www CNAME.
-- Porkbun nameservers changed to **`dalary.ns.cloudflare.com` and `ray.ns.cloudflare.com`**. Saved registrar values, `.com` registry delegation, `1.1.1.1` and `8.8.8.8` confirm the update. No DS record existed immediately before the change.
-- Cloudflare zone is **Active** and Universal SSL is **Active** for `medical-rank.com` and `*.medical-rank.com` (expires 2027-02-14). Always Use HTTPS is enabled. Production Worker `medical-rank` is deployed at `10c02fd156e6`, version `f6568b8a-e599-4d5b-abad-07f256dac30e`, with no targets. The apex custom-domain configuration is now committed for cutover; web DNS still points to Netlify until deployment attaches it.
-- Owner confirmed on 2026-11-17 that `info@medical-rank.com` receives and sends mail successfully. `PUBLIC_CONTACT_ENDPOINT` is unset, so contact uses an email link.
-- Netlify automatic publishing is **locked** to rollback deployment `67100d3f4b48fd000882034f`. Owner's chosen SEO-engine service account can read the Search Console domain property; Google currently reports Restricted user, and the owner has been asked to change it to Full for sitemap submission. Existing credentials are outside this repo. The available 16-month page report contains 12 URLs and one click; local CSV and JSON backups are saved. Existing retirement rules remain in effect. Links and complete indexed-page exports are not available through the API used here.
-- The www redirect is prepared in the Cloudflare editor: exact hostname filter, dynamic HTTPS apex + original path, 301, query preserved. It is **not saved**. Automatic approval review rejected proceeding past Cloudflare's DNS-only warning. Cancelled that dialog; save/deploy the rule only after the planned proxied www record resolves the prerequisite. Do not retry the warning bypass.
+- Worker `medical-rank`, account `e0590b0eb502819bdd19ec5ca9533e71`, zone `64b1b5f76fd3a28920b2df26038f0b97`.
+- Deployed revision/tag **`1ef314136185`**, version **`6c472774-3f9a-4e7c-a48c-6924f5803ea4`**. Later documentation-only commits do not change the deployed assets.
+- Apex custom domain is declared in `wrangler.jsonc`. Production workers.dev and version preview URLs are off.
+- `www` uses proxied `A 192.0.2.0`. Enabled Redirect Rule **`1fa7ec3d342c4a759a5d5e3df1f205ab`** matches only `www.medical-rank.com`, sends a 301 to HTTPS apex + original path, and preserves the query string.
+- Zone and Universal SSL are active; Always Use HTTPS is on. Both hostnames pass real TLS verification. Universal certificate observed expiring 2027-02-14.
+- Guide first-publication date is **2026-11-17**.
 
 ## Agency site
 
-The homepage presents **local SEO and Google Ads for US medical practice owners and decision makers**. Service enquiries are primary; educational material supports the offer lower on the page.
+The homepage presents **local SEO and Google Ads for US medical practice owners and decision makers**, with service enquiries as the primary action and educational material lower on the page.
 
-- Commercial pages: `/services/local-seo/`, `/services/google-ads/`.
-- Editorial entry point: `/resources/`; existing published guides, worksheets, topic and article routes remain available.
-- Navigation, About, contact copy and reading-page CTAs describe the agency. No fabricated proof, credentials or prices. Missing images are omitted.
-- Guide publication date: **2026-11-17**, updated for the actual cutover day. Rebuild and recheck preview before production.
+- Dedicated pages: `/services/local-seo/`, `/services/google-ads/`; editorial entry point: `/resources/`.
+- Navigation, About, contact and reading-page CTAs describe the agency. No fabricated results, testimonials, credentials or prices. Missing images are omitted.
+- Contact uses a prefilled email link to `info@medical-rank.com`; no form endpoint is configured. Owner confirmed inbound/outbound delivery on release day. Live browser check confirmed the CTA reaches contact and its prefilled mailto remains intact.
 
-## Verified preview
+## DNS and rollback
 
-- **https://medical-rank-preview.carlos-e05.workers.dev**, Worker `medical-rank-preview`.
-- Revision/tag **`10c02fd156e6`**; Cloudflare version **`644bc2a2-9e5c-4732-80bc-171c9ad63ad4`**, deployed 2026-11-17.
-- Clean release: `npm ci`, build, preview hardening, strict verification, deploy. Dependency audit: zero vulnerabilities.
-- Deployed guide date checked remotely. Preview returns `X-Robots-Tag: noindex, nofollow` and disallow robots.txt.
-- Hosted checks passed for homepage, both services, Resources, contact, guide and worksheet (200), slash normalization (307), `/index` (301), and retired/missing URLs (404).
+- Full Porkbun table and screenshot backed up locally under `research/cloudflare-cutover/`: 8 records, TTLs included. Operational backups and credentials are not committed or deployed.
+- All 8 records were staged DNS-only at TTL 600, checked by script and an independent reviewer, then queried directly on both Cloudflare nameservers before delegation changed.
+- The actual registrar apex was an ALIAS to `apex-loadbalancer.netlify.com`, staged as an equivalent flattened apex CNAME. That web record was replaced by the Worker-managed apex record during cutover; www was replaced separately. The **six mail/verification records still match the backup exactly**, DNS-only, TTL 600.
+- Nameservers: `dalary.ns.cloudflare.com`, `ray.ns.cloudflare.com`. Registry and public resolver checks passed. No DS record existed at migration.
+- Netlify automatic publishing is **locked** to deployment **`67100d3f4b48fd000882034f`**, `main@716ad9737`, published 2024-10-16. Both domain assignments and the deployment remain intact for rollback.
+- Rollback instructions: `CUTOVER.md`. Netlify certificates expire 2026-12-20; close rollback window by **2026-12-01**, or re-provision them before extending it. Netlify and the preview Worker are not deleted during this release.
 
-## Validation and commands
+## Search Console
 
-Use Node 24, the committed lockfile and pinned project-local Wrangler **4.159.0**. From `astro-site/`:
+- Owner chose existing service account `seo-engine-reader@reviews-451317.iam.gserviceaccount.com`; no new key or personal Google account sign-in was required. Credentials remain outside this repo.
+- API confirms **Full user** on `sc-domain:medical-rank.com`.
+- Submitted **https://medical-rank.com/sitemap-index.xml** at **2026-11-17 16:42:29 UTC**. API returned **204**, then GET returned **200** and the matching submission time. Google processing was pending at that check; submission does not establish indexing.
+- Available 16-month performance data and per-URL retirement decisions are recorded in `LEGACY-URLS.md`. Links and complete indexed-page exports are still unavailable through this API workflow.
 
-```sh
-npm run release:preview
-node scripts/release.mjs production --dry-run
-npm run release:production
-```
+## Verification
 
-The release script refuses a dirty Astro tree, installs dependencies, builds the selected target, verifies it and tags the version with its commit. Production dry run passed at `3d1ef07d9e10`; no Worker was deployed by that command.
+- Clean preview and production releases: locked dependencies, Node 24, pinned Wrangler 4.159.0, audit zero vulnerabilities, strict build verification.
+- Remote production: all **18 built pages** checked; canonicals and intended robots metadata match; no inherited preview noindex headers. The **11 indexable sitemap URLs** are present; worksheets, empty hubs and 404 are excluded.
+- HTTP and HTTPS www redirects preserve path and query; apex HTTP upgrades to HTTPS. Slashless service returns 307; `/index` and `/sitemap.xml` return 301; retired/missing paths return real 404.
+- `/404.html` normalizes to `/404`, which is the built noindex page (200); this does not change missing-route 404 responses.
+- Live browser: desktop and 375px mobile, no horizontal overflow, primary CTA/contact path, intact prefilled mailto, keyboard FAQ expansion. Earlier preview checks also covered 320px, service/resource/guide/worksheet navigation and print controls.
+- Mail/verification DNS parity passed after hosting cutover. Owner confirmed actual mail delivery; message-header SPF/DKIM inspection is not claimed.
+- Local research, reviewer simulations, new unrelated draft content and legacy archives are excluded from the release checkout and deployed assets.
 
-Strict verification covers all 18 pages, commercial structure, both sitemap directions, canonicals, internal links/assets/declared anchors, draft and legacy exclusion, missing-image handling and target-specific indexing. Browser checks passed at desktop, 375px and 320px, including keyboard FAQ expansion, service-to-contact and Resources-to-guide-to-worksheet navigation. Worksheet runtime anchor and three print controls were checked; earlier print checks passed.
+## Preview and repeatable release
 
-Static assets use real 404 responses and trailing-slash normalization. Production disables workers.dev and version preview URLs. Only preview adds global noindex headers and disallow robots.txt; production verification rejects either protection in a production build.
-
-## Rollback and remaining checks
-
-- Keep Netlify and both domain assignments intact. Current rollback deployment **`67100d3f4b48fd000882034f`**, `main@716ad9737`, published 2024-10-16.
-- Mailbox, Netlify lock, zone activation and Universal SSL are confirmed. Finish the dated preview and production release, attach the apex custom domain, then configure proxied www and its redirect per `CUTOVER.md`. Check Search Console through the owner's chosen service account.
-- Verify production TLS, path/query redirects, status codes, sitemap, canonicals, robots and worksheet noindex; repeat mail checks and submit the sitemap in Search Console.
-- Netlify certificates expire **2026-12-20**. Close rollback window by **2026-12-01**, or re-provision certificates before extending it. Delete Netlify and the preview Worker only after the window; neither is deleted now.
-
-Legacy retirement rules and outstanding Search Console evidence: `LEGACY-URLS.md`. Local research and operational backups stay out of release assets.
+- Preview: https://medical-rank-preview.carlos-e05.workers.dev
+- Preview revision/tag **`10c02fd156e6`**, version **`644bc2a2-9e5c-4732-80bc-171c9ad63ad4`**, deployed 2026-11-17. Same page content as production; preview blocks indexing with a global header and disallow robots.txt.
+- Production was built from a clean isolated checkout at `/private/tmp/medical-rank-production-release`, preserving unrelated untracked work in the main workspace.
+- From `astro-site/`: `npm run release:preview`, `node scripts/release.mjs production --dry-run`, `npm run release:production`. The script refuses a dirty Astro tree, installs locked dependencies, builds, verifies and tags the version with its commit.
+- Static assets use real 404 handling and trailing-slash normalization. Strict verification checks sitemap completeness, self-canonicals, links/assets/anchors, draft/legacy exclusion, imagery and target-specific indexing protections.

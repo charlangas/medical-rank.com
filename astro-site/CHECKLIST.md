@@ -1,10 +1,11 @@
 # Your ordered checklist: Cloudflare, Porkbun, Netlify
 
-The owner authorized this Cloudflare migration on 2026-11-16. Current execution details are in `LAUNCH.md`. Tick only when the "Done when" line is true. Never edit or delete mail records (MX, TXT, DKIM CNAMEs) at any step.
+The owner authorized this Cloudflare migration on 2026-11-16; production cutover completed 2026-11-17. Current IDs and evidence are in `LAUNCH.md`. Unavailable exports and unperformed header checks remain explicit below. Mail records were preserved exactly.
 
 ## Before you start (do these first, any order)
 - [x] **Alias.** Owner confirmed on 2026-11-17 that `info@medical-rank.com` receives and sends mail successfully after the nameserver change.
-- [ ] **Search Console exports** (see `LEGACY-URLS.md`): Performance > Pages (16 months), Links > Top linked pages, Page indexing > Indexed list. Run `node scripts/gsc-classify.mjs --pages … --links …` in `astro-site/`, or send me the files. Add a redirect only for a URL that has traffic or links **and** a genuinely relevant new page.
+- [x] **Search Console page performance:** owner's service account accessed the domain property; 16-month page data exported locally and classified. Retirement decisions recorded in `LEGACY-URLS.md`.
+- [ ] **Additional Search Console evidence:** Links > Top linked pages and the complete indexed-page list are unavailable through this API workflow. Do not infer zero external links from the page report.
 - [x] **Go-live date.** 2026-11-17 committed and deployed to preview at `10c02fd156e6`; guide date, main routes and preview noindex checked remotely before production release.
 - [x] **Netlify rollback target.** Production `main@716ad9737`, deployment `67100d3f4b48fd000882034f`. Automatic publishing locked on 2026-11-17; UI confirms “Auto Publishing Locked.” Both domain assignments and deploys preserved.
 
@@ -18,22 +19,24 @@ The owner authorized this Cloudflare migration on 2026-11-16. Current execution 
 
 ## C. Change the nameservers (separate sitting; Netlify still serves the site)
 - [x] Nameservers updated at Porkbun; saved values, .com registry and 1.1.1.1 / 8.8.8.8 confirm Cloudflare delegation. No DS record was present immediately before the change.
-- [x] Cloudflare zone is **Active**; registry and public resolvers show Cloudflare delegation. Website DNS still resolves to Netlify.
+- [x] Cloudflare zone is **Active**; registry/public resolvers confirm delegation. Netlify kept serving during this stage, before the later Worker cutover.
 - [x] Owner confirms inbound/outbound mail works after nameserver migration. Header-level SPF/DKIM inspection is not claimed; existing DNS records were preserved exactly.
 - [x] Universal SSL is **Active** for apex and wildcard, expires 2027-02-14. Always Use HTTPS enabled.
 - [ ] Optional dry run: attach `staging.medical-rank.com` as a custom domain of the **preview** Worker only; check it loads over HTTPS with the noindex header; remove it afterwards.
 
 ## D. Cut over (only after A to C are done and you have a quiet hour)
 - [x] Production Worker `medical-rank` created without targets from `10c02fd156e6`, version `f6568b8a-e599-4d5b-abad-07f256dac30e`. Strict production verification passed; workers.dev and version URLs are off.
-- [ ] Add `medical-rank.com` as the Worker's custom domain (dashboard, or add `"routes": [{"pattern": "medical-rank.com", "custom_domain": true}]` to `wrangler.jsonc` and commit). Replace only the staged apex CNAME to Netlify; preserve mail and verification records.
-- [ ] `www`: delete the CNAME to Netlify; add a **proxied** placeholder `A 192.0.2.0` (or `AAAA 100::`); add a Redirect Rule: hostname equals `www.medical-rank.com` > dynamic redirect to `concat("https://medical-rank.com", http.request.uri.path)`, **301**, preserve query string.
-- [ ] Do **not** remove either domain from Netlify.
+- [x] Apex custom domain committed in `wrangler.jsonc` and deployed at `1ef314136185`, version `6c472774-3f9a-4e7c-a48c-6924f5803ea4`. Only the conflicting Netlify apex CNAME was replaced; mail and verification records preserved.
+- [x] www replaced with proxied `A 192.0.2.0`; Redirect Rule `1fa7ec3d342c4a759a5d5e3df1f205ab` enabled: exact www hostname, dynamic HTTPS apex + path, 301, query preserved. The prior DNS-only warning was resolved by the proxy change before deploying normally.
+- [x] Both domain assignments and old deploy left in Netlify; automatic publishing locked.
 
 ## E. Verify (right after D)
-- [ ] `curl -sv https://medical-rank.com/ -o /dev/null 2>&1 | grep -iE "issuer|expire|verify"`: verifies; same for `www.medical-rank.com`. Also `http://` for both ends at `https://medical-rank.com/`.
-- [ ] `curl -sI "https://www.medical-rank.com/guides/x/?a=1&b=2"`: `301` and `location: https://medical-rank.com/guides/x/?a=1&b=2`.
-- [ ] `/`, both `/services/` pages, `/resources/`, the guide and the worksheet return 200; `/dental`, `/pricing`, `/physical-therapy/pod` return 404. The sitemap includes every built indexable page (including both service pages and Resources) and excludes worksheets, empty noindex hubs and 404. `/robots.txt` allows crawling; **no `x-robots-tag` on the production hostname** (`curl -sI https://medical-rank.com/ | grep -i x-robots` prints nothing); the worksheet has `noindex,follow`. Run `npm run verify:production` for the full route checks.
-- [ ] Mail again (inbound to the alias and outbound). Search Console: the domain property still verifies; submit `https://medical-rank.com/sitemap-index.xml`.
+- [x] TLS verification result 0 for apex (200) and www (301). HTTP for both redirects to HTTPS apex.
+- [x] HTTP and HTTPS www preserve `/guides/x/?a=1&b=2` in a 301 to HTTPS apex.
+- [x] All 18 built pages checked remotely; 11 indexable sitemap URLs, correct canonicals/robots, no preview headers, real retired/missing 404s, intended slash and legacy alias redirects. Production build verification passed.
+- [x] All six mail/verification records match the registrar backup after hosting cutover: DNS-only, TTL 600. Owner confirmed inbound/outbound delivery on release day.
+- [ ] Message-header SPF/DKIM inspection and a separate post-hosting-cutover mail exchange have not been performed by the agent.
+- [x] Domain-property API access confirmed as Full user; sitemap-index.xml submitted (204), then retrieved (200) with matching submission timestamp. Google processing was pending at the check.
 
 ## F. If anything fails: roll back to Netlify (minutes)
 - [ ] If rollback is needed: remove the Worker's apex custom-domain binding; restore apex `CNAME apex-loadbalancer.netlify.com` and `www CNAME medicalrank.netlify.app`, both **DNS-only**, and disable the Redirect Rule. Re-run E against the old site. Mail records are untouched.
